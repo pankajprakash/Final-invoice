@@ -22,13 +22,13 @@ export const fetchInvoiceFailure = error => {
 }
 
 
-
+const token = localStorage.getItem("user_token")
 
 export const postInvoiceData = (Invoice) => {
   console.log("invoice items", Invoice)
-  const token = localStorage.getItem("user_token")
+  
   console.log(token)
-  // console.log("form Invoice ===>", Invoice)
+  console.log("form Invoice ===>", Invoice)
   return (dispatch) => {
     dispatch(fetchInvoiceRequest);
     axios.post("http://192.168.1.78:9000/invoice",Invoice,{

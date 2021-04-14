@@ -126,7 +126,7 @@ const signup=()=>{
 
                                 <img
                                     src={
-                                        require("/home/keymouseit/Documents/original Project/invoicemanagement/src/Images/login_character.png")
+                                        require("./../../Images/login_character.png")
                                             .default
                                     }
                                     alt="Header Img"

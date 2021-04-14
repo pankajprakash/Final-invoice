@@ -26,7 +26,7 @@ export const postCompanyData = (companydata) => {
   return (dispatch) => {
     dispatch(fetchCompanyRequest);
     axios
-      .post("http://192.168.1.82:9000/org/register", companydata)
+      .post("http://192.168.1.78:9000/org/register", companydata)
 
       .then((response) => {
         if (response?.status === 200) {

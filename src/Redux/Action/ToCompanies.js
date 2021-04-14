@@ -29,7 +29,7 @@ export const CompanyData = () => {
   
   return (dispatch) => {
     dispatch(fetchCompanyRequest);
-    axios.get("http://192.168.1.82:9000/org/alldetail")
+    axios.get("http://192.168.1.78:9000/org/alldetail")
 
       .then(response => {
        

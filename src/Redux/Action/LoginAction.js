@@ -29,7 +29,7 @@ export const postLoginData = (logindata,history) => {
     return async (dispatch) => {
         dispatch(fetchLoginRequest);
         try {
-            const x = await axios.post("http://192.168.1.82:9000/user/login", logindata)
+            const x = await axios.post("http://192.168.1.78:9000/user/login", logindata)
             console.log(x.data.token,"token is from login ")
             console.log(x,"loginnnnnnnn")
             const token = x.data.token

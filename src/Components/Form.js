@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from 'react-redux'
 import { postInvoiceData } from './../Redux/Action/FormAction'
-import {CompanyData} from './../Redux/Action/ToCompanies'
+import { CompanyData } from './../Redux/Action/ToCompanies'
 
 
 
@@ -54,13 +54,19 @@ const Form = ({ history }) => {
        "dueDate": invoicedata.dueDate,
        "status":invoicedata.status
     })
+
     dispatch(postInvoiceData(state1))
+
   }
 
 
   const onSubmit = (invoicedata) => {
      getValues(invoicedata)
     console.log(invoicedata)
+    setTimeout(() => {
+      history.push("/download")
+    }, 1000);
+    // 
     // console.log(object)
     
     // console.log("dispatched data",state.companyId.to);
@@ -80,7 +86,7 @@ const Form = ({ history }) => {
     <>
       <Container>
         <div className="outer">
-
+          {JSON.stringify(state1)}
           <form onSubmit={handleSubmit(onSubmit)} className="form-data">
             <h5 className="top-head"><b >INVOICE MANAGEMENT</b></h5>
             <Row className="first">
