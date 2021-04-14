@@ -7,10 +7,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from 'react-redux'
 import { postInvoiceData } from './../Redux/Action/FormAction'
 import {CompanyData} from './../Redux/Action/ToCompanies'
+import { postLoginData } from "../Redux/Action/LoginAction";
 
 
-
-const Form = ({ history }) => {
+const Form = ({ history,location }) => {
 
 
  
@@ -34,7 +34,11 @@ const Form = ({ history }) => {
 
   useEffect(() => {
     dispatch(CompanyData());
-    
+    dispatch(postLoginData())
+    console.log(location.state,"user reg data in form")
+    console.log(selectedOrg,"sel org")
+    console.log(selectedOrg,"gggggggggggggggggggggggggggggggggggggggggggggg")
+    // console.log(selOrg,"local s data")
   }, [])
   // const onSubmit = (invoicedata) => dispatch(postInvoiceData
 
@@ -61,6 +65,7 @@ const Form = ({ history }) => {
   const onSubmit = (invoicedata) => {
      getValues(invoicedata)
     console.log(invoicedata)
+  
     // console.log(object)
     
     // console.log("dispatched data",state.companyId.to);
@@ -74,6 +79,10 @@ const Form = ({ history }) => {
   }
 
 
+  const selectedOrg = JSON.parse(localStorage.getItem("selected_company"))
+
+
+
 
   return (
 
@@ -83,13 +92,17 @@ const Form = ({ history }) => {
 
           <form onSubmit={handleSubmit(onSubmit)} className="form-data">
             <h5 className="top-head"><b >INVOICE MANAGEMENT</b></h5>
-            <Row className="first">
+            <Row className="firstRow">
               <Col md="4">
                 <label for="status">From</label>
                 <select {...register("from")} className="select1">
-                  <option value="606c11893d5d512cd865dda1">KeyMouseit</option>
-                  <option value="606c540c3ac87255eb43225d">Tcs</option>
-                  <option value="606c540c3ac87255eb43225d">Wipro</option>
+                
+                {selectedOrg.map((e) => (
+                   <option value={e.id}>{e.companyName}</option>
+                ))}
+                  
+                  {/* <option value="606c540c3ac87255eb43225d">Tcs</option>
+                  <option value="606c540c3ac87255eb43225d">Wipro</option> */}
                 </select>
               </Col>
               <Col md="4">
@@ -114,7 +127,7 @@ const Form = ({ history }) => {
               </Col>
             </Row>
 
-            <Row className="first">
+            <Row className="firstRow">
               <Col md="3">
                 <label for="Notes">Notes</label>
                 <input
@@ -175,7 +188,7 @@ const Form = ({ history }) => {
             </Row>
 
 
-            <Row className="first">
+            <Row className="firstRow">
               <Col md="4">
                 <label for="description">Description</label>
                 <input
@@ -231,7 +244,7 @@ const Form = ({ history }) => {
                 <input type="text" onChange={change} name="notes" value={initial.notes} />
               </Col>
             </Row> */}
-            <Row className="first">
+            <Row className="firstRow">
 
               <Col md="4">
                 <label for="status">Status</label>
@@ -246,7 +259,7 @@ const Form = ({ history }) => {
             </Row>
 
 
-            <Row className="first">
+            <Row className="firstRow">
               <Col className="button-column"  >
                 <button className="addnew-btn" onClick={logoutFun}><i class="far fa-plus-square"> logout </i></button>
               </Col>
@@ -254,7 +267,7 @@ const Form = ({ history }) => {
             </Row>
 
 
-            <Row className="first">
+            <Row className="firstRow">
               <Col className="button-column"  >
                 <button className="submit-btn" >SUBMIT</button>
               </Col>

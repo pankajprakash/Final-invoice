@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -8,12 +8,14 @@ import { postData } from "./../../Redux/Action/Action";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {CompanyData} from './../../Redux/Action/ToCompanies'
+import { CompanyData } from './../../Redux/Action/ToCompanies'
+import Select from 'react-select';
+import { colourOptions } from '../../Auth/UserRegistration/Data';
 // import history from './../UserRegistration/UserRegistration'
 
 const UserRegistration = ({ history }) => {
     const notify = () => toast.success("Success");
-
+    const [org, setOrg] = useState([])
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const {
@@ -23,9 +25,14 @@ const UserRegistration = ({ history }) => {
         formState: { errors },
         watch,
     } = useForm();
+    console.log(org)
     const onSubmit = (data) => {
-        console.log(data, "=============data");
-        dispatch(postData(data, history));
+
+        const body = {
+            ...data,
+            organizations: org.map(e => e.value)
+        }
+        dispatch(postData(body, history));
     };
 
     const signup = () => {
@@ -42,10 +49,20 @@ const UserRegistration = ({ history }) => {
 
 
 
-  useEffect(() => {
-    dispatch(CompanyData());
-    
-  }, [])
+    useEffect(() => {
+        dispatch(CompanyData());
+        console.log(mapedData, "mapp data")
+
+    }, [])
+
+
+    const mapedData = state.companyId.to.map((e) =>
+    ({
+        'label': e.name,
+        'value': e.id,
+        'color': '#00B8D9'
+    })
+    )
 
     return (
         <>
@@ -57,10 +74,10 @@ const UserRegistration = ({ history }) => {
                                 <ul className="options">
                                     <li className="list1" onClick={signup}>
                                         <b>Sign Up</b>
-                  </li>
+                                    </li>
                                     <li className="list1" onClick={signin}>
-                                       <b>Sign In</b> 
-                  </li>
+                                        <b>Sign In</b>
+                                    </li>
                                 </ul>
                             </div>
                         </h5>
@@ -135,7 +152,7 @@ const UserRegistration = ({ history }) => {
                                         <label for="Email">Email</label>
 
                                         <InputS
-                                        placeholder="abc@example.com"
+                                            placeholder="abc@example.com"
                                             type="text"
                                             autoComplete="off"
                                             {...register("email", {
@@ -154,7 +171,7 @@ const UserRegistration = ({ history }) => {
                                         <label for="Password">Password</label>
 
                                         <InputS
-                                        placeholder="password"
+                                            placeholder="password"
                                             type="password"
                                             autoComplete="off"
                                             {...register("password", {
@@ -205,14 +222,56 @@ const UserRegistration = ({ history }) => {
 
                                 <Row>
                                     <Col md="12">
-                                        <label for="status">Organization</label>
-                                        <select {...register("organization")} className="select">
+                                        {/* <label for="status">Organization</label>
+                                        <select {...register("organizations")} className="select">
                 
                 {state.companyId.to.map((e) => 
                  <option value={e.id}>{e.name}</option>
                  )}
-                 
-               </select>
+
+
+                    
+               </select>  */}
+
+
+
+
+                                        <Controller
+                                            as={Select}
+                                            name="organizations"
+                                            options={mapedData}
+                                            isMulti
+                                            control={control}
+                                            render={(p) => {
+                                                const { ref, onChange, value } = p.field
+                                                return (
+                                                    <Select
+                                                        inputRef={ref}
+                                                        classNamePrefix="addl-class"
+                                                        options={mapedData}
+                                                        isMulti
+                                                        value={mapedData.find(c => c.value === value)}
+                                                        onChange={val => { setOrg(val) }}
+
+                                                    />
+                                                )
+                                            }}
+                                        />
+
+                                        {/* <Select
+                                                isMulti
+                                                name="colors"
+                                                options={mapedData}
+                                                className="basic-multi-select"
+                                                classNamePrefix="select"
+                                               
+                                            /> */}
+
+
+
+
+
+
                                     </Col>
                                 </Row>
 

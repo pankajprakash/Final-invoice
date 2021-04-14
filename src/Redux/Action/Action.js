@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { postLoginData } from "./LoginAction";
 // const baseUrl=require("../../Constants/Api")
 // const z=baseUrl.API_BASE_URL
-import {API_BASE_URL} from './../../Constants/Api'
+import { API_BASE_URL } from './../../Constants/Api'
 
 export const fetchUsersRequest = () => {
   return {
@@ -26,20 +26,36 @@ export const fetchUsersFailure = (error) => {
   };
 };
 
-export const postData = (data,history) => {
+export const postData = (data, history) => {
   console.log("form data ===>", data);
+  // const org = []
+  // org.push(data.organizations);
+
+  // localStorage.setItem("selected_org", JSON.stringify(org))
+
+
+
   return (dispatch) => {
     dispatch(fetchUsersRequest);
     axios
       .post(`${API_BASE_URL}user/register`, data)
-      
+
       .then((response) => {
         if (response?.data?._id) {
 
           toast.success("Successfully Registered!");
-          // history.push('/form')
+
+         
           const loginData = { email: data.email, password: data.password }
+          
           dispatch(postLoginData(loginData, history))
+
+          setTimeout(() => {
+            history.push('/form', {
+              userData: data
+            })
+          }, 1000);
+          
         }
         console.log(response, "========response");
       })

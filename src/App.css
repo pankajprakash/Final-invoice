@@ -1,11 +1,11 @@
  @import url("https://cdn.syncfusion.com/ej2/material.css");
 
 
-  .first
+   .firstRow
 {
-  margin-top: 30px ;
+  margin-top: 30px !important;
   
-} 
+}   
 
 
 .first1
@@ -111,9 +111,10 @@ padding: 20px;
 }  */
 
 .top-head1{
-  height: 50px;
+ 
    padding-top: 30px; 
 } 
+
 
 
 
@@ -148,10 +149,11 @@ padding: 20px;
   cursor: pointer;
 }
 
-.list-second
+.listd
 {
  border-bottom:2px solid #4589fe;
  cursor: pointer;
+ margin-left:20px
 
 }
 
@@ -161,4 +163,8 @@ padding: 20px;
 
 .para {
   color: #DD3545;
+}
+
+.list1d{
+  cursor: pointer !important;
 }

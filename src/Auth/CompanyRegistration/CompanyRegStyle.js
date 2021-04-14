@@ -11,7 +11,7 @@ export const Back = styled.div`
     padding: 10px;
   }
   .checkbox-para {
-    margin-top: 15px;
+    // margin-top: 15px;
     font-size: 12px;
     padding: 10px;
   }
@@ -27,6 +27,7 @@ export const Back = styled.div`
   }
   .btn-sub {
     border: none;
+    margin-top:-14px
   }
   .para {
     color: #DD3545;

@@ -15,7 +15,7 @@ export const companyReducer = (state = initialState, action) => {
             return {
                 loading:false,
                 companydata:action.payload,
-                error:''
+                error:'',
             }  
 
             case 'FETCH_COMPANY_FAILURE' :
