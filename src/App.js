@@ -12,6 +12,7 @@ import {
   Link
 } from "react-router-dom";
 import Result from './Components/Result'
+import DownloadPage from './Components/DownloadPage';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
           <Route exact path="/login" component={Login}  />
           <Route exact path="/form" component={Form}  />
           <Route exact path="/company" component={ComapnyReg}  />
-          
+          <Route exact path="/download" component={DownloadPage}  />
           {/* <UserRegistration /> */}
       <ComapnyReg />
       <Form />

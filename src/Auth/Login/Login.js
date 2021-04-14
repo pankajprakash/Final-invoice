@@ -64,7 +64,7 @@ const Login = ({ history }) => {
                   <Col md="12">
                     <label for="password">Password</label>
                     <InputS
-                      placeholder="KeyMouseit"
+                      placeholder="password"
                       type="password"
                       {...register("password", {
                         required: true,

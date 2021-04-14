@@ -6,9 +6,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from 'react-redux'
 import { postInvoiceData } from './../Redux/Action/FormAction'
-import {CompanyData} from './../Redux/Action/ToCompanies'
-import { postLoginData } from "../Redux/Action/LoginAction";
-
+import { CompanyData } from './../Redux/Action/ToCompanies'
+import { postLoginData } from "./../../src/Redux/Action/LoginAction";
 
 const Form = ({ history,location }) => {
 
@@ -29,7 +28,7 @@ const Form = ({ history,location }) => {
   })
   const state = useSelector(state => state)
   const dispatch = useDispatch()
-  const { control, register, handleSubmit, errors } = useForm();
+  const { control, register, handleSubmit, formState: {errors} } = useForm();
 
 
   useEffect(() => {
@@ -58,14 +57,25 @@ const Form = ({ history,location }) => {
        "dueDate": invoicedata.dueDate,
        "status":invoicedata.status
     })
-    dispatch(postInvoiceData(state1))
+    
+    setTimeout(() => {
+     
+    }, 500);
+    
+
   }
 
 
   const onSubmit = (invoicedata) => {
-     getValues(invoicedata)
+    //  getValues(invoicedata)
+    dispatch(postInvoiceData(invoicedata,history))
     console.log(invoicedata)
-  
+    
+    // setTimeout(() => {
+
+    //   history.push("/download")
+    // }, 1000);
+    // 
     // console.log(object)
     
     // console.log("dispatched data",state.companyId.to);
@@ -89,7 +99,7 @@ const Form = ({ history,location }) => {
     <>
       <Container>
         <div className="outer">
-
+          {/* {JSON.stringify(state1)} */}
           <form onSubmit={handleSubmit(onSubmit)} className="form-data">
             <h5 className="top-head"><b >INVOICE MANAGEMENT</b></h5>
             <Row className="firstRow">
@@ -133,7 +143,7 @@ const Form = ({ history,location }) => {
                 <input
                   type="text"
                   {...register('Notes', {
-                    max: 3
+                    
                   })}
                 />
               </Col>
@@ -144,18 +154,34 @@ const Form = ({ history,location }) => {
                 <input
                   type="text"
                   {...register('ProductName', {
-                    max: 3
+                    required:true
+                  
+                    
                   })}
-                /> </Col>
+
+                  
+                />
+                 <p className="para">
+                      {errors.ProductName && "Password is required*"}
+                    </p>
+                
+               
+                 </Col>
 
               <Col md="3">
                 <label for="Quantity">Quantity</label>
                 <input
                   type="text"
                   {...register('quantity', {
-                    max: 3
+                    required:true
+                  
+                    
                   })}
                 />
+                 <p className="para">
+                      {errors.quantity && "Password is required*"}
+                    </p>
+                
               </Col>
 
               <Col md="3">

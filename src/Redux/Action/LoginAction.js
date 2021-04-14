@@ -32,8 +32,8 @@ export const postLoginData = (logindata, history) => {
         dispatch(fetchLoginRequest);
         try {
             const x = await axios.post("http://192.168.1.78:9000/user/login", logindata)
-            console.log(x.data.token, "token is from login ")
-            console.log(x, "loginnnnnnnn")
+            console.log(x.data.token,"token is from login ")
+            console.log(x,"loginnnnnnnn")
             const token = x.data.token
             localStorage.setItem("user_token", token);
             localStorage.setItem("selected_company",JSON.stringify(x.data.companies))

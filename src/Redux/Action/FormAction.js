@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from "react-toastify";
 export const fetchInvoiceRequest = () => {
 
   return {
@@ -22,24 +23,49 @@ export const fetchInvoiceFailure = error => {
 }
 
 
+const token = localStorage.getItem("user_token")
 
+export const postInvoiceData = (invoicedata,history) => {
+  console.log("invoice items", invoicedata)
+  const invoiceItem = {
+    "from": invoicedata.from,
+    "to": invoicedata.to,
+    "createdBy": invoicedata.createdBy,
+    "items": {
+      "productName": invoicedata.ProductName,
+      "quantity": invoicedata.quantity,
+      "description": invoicedata.Description,
+      "unitPrice": invoicedata.unitPrice,
+      "total": invoicedata.total
+    },
+    "dueDate": invoicedata.dueDate,
+    "status": invoicedata.status
+  }
 
-export const postInvoiceData = (Invoice) => {
-  console.log("invoice items", Invoice)
-  const token = localStorage.getItem("user_token")
   console.log(token)
-  // console.log("form Invoice ===>", Invoice)
+  console.log("form Invoice ===>", invoiceItem)
   return (dispatch) => {
     dispatch(fetchInvoiceRequest);
-    axios.post("http://192.168.1.78:9000/invoice",Invoice,{
+    axios.post("http://192.168.1.78:9000/invoice", invoiceItem, {
       headers: {
         'Authorization': token
-      }})
+      }
+    })
 
-      .then(response => console.log(response,"res of invoice data"))
-
-      .catch(error => console.log('error', error));
-
+      .then((res) => {
+        (console.log(res,"res from post form "))
+        
+          if(res.status===200){
+            history.push("/download")
+          }
+          
+      
+        
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+        console.log("error", error);
+      });
   };
 };
 
