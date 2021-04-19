@@ -64,6 +64,9 @@ background-color: #F1F6FC;
   color: #dd3545;
 }
 
+.error{
+  color:#dd3545;
+}
 
 `;
 

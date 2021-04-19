@@ -41,13 +41,14 @@ export const postData = (data, history) => {
       .post(`${API_BASE_URL}user/register`, data)
 
       .then((response) => {
+        console.log(response, "response in registration page............")
         if (response?.data?._id) {
 
           toast.success("Successfully Registered!");
 
-         
+
           const loginData = { email: data.email, password: data.password }
-          
+
           dispatch(postLoginData(loginData, history))
 
           setTimeout(() => {
@@ -55,7 +56,7 @@ export const postData = (data, history) => {
               userData: data
             })
           }, 1000);
-          
+
         }
         console.log(response, "========response");
       })
@@ -67,6 +68,7 @@ export const postData = (data, history) => {
         toast.error(error.response.data.name);
         toast.error(error.response.data.detail);
         toast.error(error.response.data.email);
+        toast.error(error.response.data.mobile);
         console.log("error===========", error.response);
       });
   };

@@ -192,3 +192,21 @@ padding: 20px;
   background-color: #4CAF50;
   color: white;
 }
+
+.country-code
+{
+  width: 100%;
+  padding: 5px 8px;
+
+background-color: none;
+  box-sizing: border-box;
+
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

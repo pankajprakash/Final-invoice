@@ -48,7 +48,7 @@ const Login = ({ history }) => {
                   <Col md="12">
                     <label for="Email">Email</label>
                     <InputFirst
-                      placeholder="KeyMouseit"
+                      placeholder="Enter your email"
                       className="first"
                       type="text"
                       {...register("email", {

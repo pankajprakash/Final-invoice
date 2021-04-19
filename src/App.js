@@ -9,7 +9,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 import Result from './Components/Result'
 import DownloadPage from './Components/DownloadPage';
@@ -31,7 +32,11 @@ function App() {
         {/* <Login /> */}
           <Route exact path="/" component={UserRegistration}  />
           <Route exact path="/login" component={Login}  />
-          <Route exact path="/form" component={Form}  />
+         
+         
+          { localStorage.getItem('user_token') ? <Route exact path="/form" component={Form} /> : <Redirect to="/"/> }
+         
+          {/* <Route exact path="/form" component={Form} /> */}
           <Route exact path="/company" component={ComapnyReg}  />
           <Route exact path="/download" component={DownloadPage}  />
           {/* <UserRegistration /> */}

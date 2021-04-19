@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Datepicker from './Datepicker';
 import { Container, Row, Col } from 'reactstrap';
@@ -8,35 +8,77 @@ import { useSelector, useDispatch } from 'react-redux'
 import { postInvoiceData } from './../Redux/Action/FormAction'
 import { CompanyData } from './../Redux/Action/ToCompanies'
 import { postLoginData } from "./../../src/Redux/Action/LoginAction";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 
-const Form = ({ history,location }) => {
+const Form = ({ history, location }) => {
 
 
- 
+
   const [state1, setstate1] = useState({
     "from": '',
     "to": '',
-    "createdBy":'' ,
+    "createdBy": '',
     "items": {
-       "productName": '', 
-       "quantity": '', 
-       "description": '', 
-       "unitPrice": '', 
-       "total": '' }, 
-       "dueDate": '',
-       "status":''
+      "productName": '',
+      "quantity": '',
+      "description": '',
+      "unitPrice": '',
+      "total": ''
+    },
+    "dueDate": '',
+    "status": ''
   })
+
+  const [addMore, setAddmore] = useState({
+    items: [
+      {
+        productName: "",
+        quantity: "",
+        description: "",
+        unitPrice: "",
+        total: "",
+      },
+    ],
+  });
+
+  const addItems = (e) => {
+    e.preventDefault();
+    setAddmore((prevState) => ({
+      //here hName was newCon
+      items: [
+        ...prevState.items,
+        {
+          productName: "",
+          quantity: "",
+          description: "",
+          unitPrice: "",
+          total: "",
+        },
+      ],
+    }));
+  };
+
+
+
+
+
   const state = useSelector(state => state)
   const dispatch = useDispatch()
-  const { control, register, handleSubmit, formState: {errors} } = useForm();
+  const { control, register, handleSubmit, formState: { errors } } = useForm();
 
 
   useEffect(() => {
     dispatch(CompanyData());
     dispatch(postLoginData())
-    console.log(location.state,"user reg data in form")
-    console.log(selectedOrg,"sel org")
-    console.log(selectedOrg,"gggggggggggggggggggggggggggggggggggggggggggggg")
+    console.log(location.state, "user reg data in form")
+    console.log(selectedOrg, "sel org")
+    console.log(selectedOrg, "gggggggggggggggggggggggggggggggggggggggggggggg")
     // console.log(selOrg,"local s data")
   }, [])
   // const onSubmit = (invoicedata) => dispatch(postInvoiceData
@@ -45,39 +87,40 @@ const Form = ({ history,location }) => {
   //   (invoicedata));
   const getValues = (invoicedata) => {
     setstate1({
-      "from": invoicedata.from ,
-    "to": invoicedata.to,
-    "createdBy":invoicedata.createdBy ,
-    "items": {
-       "productName": invoicedata.ProductName, 
-       "quantity": invoicedata.quantity, 
-       "description": invoicedata.Description, 
-       "unitPrice": invoicedata.unitPrice, 
-       "total": invoicedata.total }, 
-       "dueDate": invoicedata.dueDate,
-       "status":invoicedata.status
+      "from": invoicedata.from,
+      "to": invoicedata.to,
+      "createdBy": invoicedata.createdBy,
+      "items": {
+        "productName": invoicedata.ProductName,
+        "quantity": invoicedata.quantity,
+        "description": invoicedata.Description,
+        "unitPrice": invoicedata.unitPrice,
+        "total": invoicedata.total
+      },
+      "dueDate": invoicedata.dueDate,
+      "status": invoicedata.status
     })
-    
+
     setTimeout(() => {
-     
+
     }, 500);
-    
+
 
   }
 
 
   const onSubmit = (invoicedata) => {
     //  getValues(invoicedata)
-    dispatch(postInvoiceData(invoicedata,history))
+    dispatch(postInvoiceData(invoicedata, history))
     console.log(invoicedata)
-    
+
     // setTimeout(() => {
 
     //   history.push("/download")
     // }, 1000);
     // 
     // console.log(object)
-    
+
     // console.log("dispatched data",state.companyId.to);
 
   }
@@ -94,6 +137,17 @@ const Form = ({ history,location }) => {
 
 
 
+
+
+     
+if (localStorage.getItem('user_token'))
+{
+  <Redirect push to="/form"/>
+}
+else
+{<Redirect push to="/"/>}
+
+
   return (
 
     <>
@@ -106,11 +160,11 @@ const Form = ({ history,location }) => {
               <Col md="4">
                 <label for="status">From</label>
                 <select {...register("from")} className="select1">
-                
-                {selectedOrg.map((e) => (
-                   <option value={e.id}>{e.companyName}</option>
-                ))}
-                  
+
+                  {selectedOrg.map((e) => (
+                    <option value={e.id}>{e.companyName}</option>
+                  ))}
+
                   {/* <option value="606c540c3ac87255eb43225d">Tcs</option>
                   <option value="606c540c3ac87255eb43225d">Wipro</option> */}
                 </select>
@@ -128,11 +182,11 @@ const Form = ({ history,location }) => {
               <Col md="4">
                 <label for="To">To</label>
                 <select {...register("to")} className="select">
-                
-                 {state.companyId.to.map((e) => 
-                  <option value={e.id}>{e.name}</option>
+
+                  {state.companyId.to.map((e) =>
+                    <option value={e.id}>{e.name}</option>
                   )}
-                  
+
                 </select>
               </Col>
             </Row>
@@ -143,7 +197,7 @@ const Form = ({ history,location }) => {
                 <input
                   type="text"
                   {...register('Notes', {
-                    
+
                   })}
                 />
               </Col>
@@ -154,34 +208,34 @@ const Form = ({ history,location }) => {
                 <input
                   type="text"
                   {...register('ProductName', {
-                    required:true
-                  
-                    
+                    required: true
+
+
                   })}
 
-                  
+
                 />
-                 <p className="para">
-                      {errors.ProductName && "Password is required*"}
-                    </p>
-                
-               
-                 </Col>
+                <p className="para">
+                  {errors.ProductName && "Password is required*"}
+                </p>
+
+
+              </Col>
 
               <Col md="3">
                 <label for="Quantity">Quantity</label>
                 <input
                   type="text"
                   {...register('quantity', {
-                    required:true
-                  
-                    
+                    required: true
+
+
                   })}
                 />
-                 <p className="para">
-                      {errors.quantity && "Password is required*"}
-                    </p>
-                
+                <p className="para">
+                  {errors.quantity && "Password is required*"}
+                </p>
+
               </Col>
 
               <Col md="3">
@@ -230,9 +284,15 @@ const Form = ({ history,location }) => {
                 <input
                   type="number"
                   {...register('unitPrice', {
+                    required: true
 
                   })}
                 />
+
+                <p className="para">
+                  {errors.unitPrice && "Password is required*"}
+                </p>
+
               </Col>
 
 
@@ -241,9 +301,17 @@ const Form = ({ history,location }) => {
                 <input
                   type="number"
                   {...register('total', {
+                    required:true
 
                   })}
-                /></Col>
+
+                  
+                />
+                  <p className="para">
+                      {errors.total && "Password is required*"}
+                    </p>
+                
+                </Col>
 
               {/* <Col md="3">
                 <label for="mode of payment">Mode of Payment</label>
@@ -274,15 +342,86 @@ const Form = ({ history,location }) => {
 
               <Col md="4">
                 <label for="status">Status</label>
-                <select {...register("status")} className="select">
+                <select {...register("status",{required:true})} className="select">
                   <option value="pending">Pending</option>
                   <option value="underReview">Under Review</option>
                   <option value="approved">Approved</option>
                 </select>
+
+                <p className="para">
+                      {errors.status && "Password is required*"}
+                    </p>
               </Col>
 
 
             </Row>
+              
+         {/*mapping newly created data */}
+
+         {addMore.items.map((e) => (
+              <Row className="first">
+                <Col md="3">
+                  <label for="product name">Product Name</label>
+                  <input
+                    type="text"
+                    {...register("ProductName", {
+                      max: 3,
+                    })}
+                  />{" "}
+                </Col>
+
+                <Col md="3">
+                <label for="Quantity">Quantity</label>
+                <input
+                  type="text"
+                  {...register("quantity", {
+                    max: 3,
+                  })}
+                />
+              </Col>
+
+                  <Col md="4">
+                <label for="description">Description</label>
+                <input
+                  type="text"
+                  {...register('Description', {
+
+                  })}
+                />
+              </Col>
+
+              <Col md="4">
+                <label for="price">Price</label>
+                <input
+                  type="number"
+                  {...register('unitPrice', {
+
+                  })}
+                />
+              </Col>
+
+
+              <Col md="4">
+                <label for="Total">Total</label>
+                <input
+                  type="number"
+                  {...register('total', {
+
+                  })}
+                /></Col>   
+
+
+
+
+              </Row>
+            ))}
+
+
+
+
+
+
+
 
 
             <Row className="firstRow">
@@ -291,6 +430,14 @@ const Form = ({ history,location }) => {
               </Col>
 
             </Row>
+
+            <Row className="firstRow">
+              <Col className="button-column"  >
+                <button className="addnew-btn" onClick={ addItems}><i class="far fa-plus-square"> Add More </i></button>
+              </Col>
+
+            </Row>
+
 
 
             <Row className="firstRow">
