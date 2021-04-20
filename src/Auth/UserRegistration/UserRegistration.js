@@ -3,14 +3,15 @@ import { useForm, Controller } from "react-hook-form";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "reactstrap";
-import { Back, InputFirst, InputS, PhoneInput } from "./UserRegistrationStyle";
+import { Back, InputFirst, InputS } from "./UserRegistrationStyle";
 import { postData } from "./../../Redux/Action/Action";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CompanyData } from './../../Redux/Action/ToCompanies'
 import Select from 'react-select';
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 import { COUNTRY_CODE_LIST } from './../../Countries'
 
 
@@ -26,6 +27,7 @@ import { COUNTRY_CODE_LIST } from './../../Countries'
 
 const UserRegistration = ({ history }) => {
   const notify = () => toast.success("Success");
+  const [phone, setphone] = useState([])
   const [org, setOrg] = useState([])
   const state = useSelector(state => state);
   const dispatch = useDispatch();
@@ -41,8 +43,13 @@ const UserRegistration = ({ history }) => {
 
     const body = {
       ...data,
-      organizations: org.map(e => e.value)
+      organizations: org.map(e => e.value),
+      mobile: `+${phone}`
     }
+
+    console.log(phone)
+
+
     dispatch(postData(body, history));
   };
 
@@ -74,6 +81,8 @@ const UserRegistration = ({ history }) => {
     'color': '#00B8D9'
   })
   )
+
+
 
 
 
@@ -169,23 +178,31 @@ const UserRegistration = ({ history }) => {
 
 
 
-                  <Col md="4">
-                    <label for="Cotact">Country code</label>
+
+                  {/* <label for="Cotact">Country code</label>
 
                     <select className="country-code" >
                       {COUNTRY_CODE_LIST.map(e => (
                         <option>{e.value}</option>
                       ))}
-                    </select>
+                    </select> */}
 
 
+
+                  <Col md="12">
+                    <label for="number">Contact</label>
+                    <PhoneInput
+                      country={'in'}
+                      value={state.phone}
+                      onChange={phone => setphone(phone)}
+
+
+                    />
                   </Col>
-                  <Col md="8">
-                    <label for="Cotact">Contact</label>
 
 
 
-                    {/* 
+                  {/* 
 {COUNTRY_LIST.map(e => (
     <div>
       {e.dialCode}
@@ -196,7 +213,7 @@ const UserRegistration = ({ history }) => {
 
 
 
-                    <InputS
+                  {/* <InputS
                       placeholder="contact number"
                       autoComplete="off"
                       type="number"
@@ -207,14 +224,13 @@ const UserRegistration = ({ history }) => {
                           maxLength: 10,
                           pattern: {
 
-                            // value:/^[0-9]{1,10}$/,
-                            //   message: "invalid number",
+                            
                           },
                         })}
-                    />
-                    {/* {errors.mobile && <p className="error">{errors.mobile.message}</p>} */}
+                    /> */}
+                  {/* {errors.mobile && <p className="error">{errors.mobile.message}</p>} */}
 
-                  </Col>
+
 
 
 

@@ -85,10 +85,12 @@ padding: 20px;
 {
   width: 120px;
 
+
   padding: 5px 8px;
   border-radius: 5px;
   background-color:E5E6E8; 
   color:black;
+  
 ;
 }
 
@@ -209,4 +211,18 @@ input[type="number"]::-webkit-outer-spin-button {
   -moz-appearance: none;
   appearance: none;
   margin: 0;
+}
+
+.btn-head1
+{
+  display: flex !important;
+
+
+  
+}
+.log-btn
+{
+margin-left: 650px;
+
+
 }

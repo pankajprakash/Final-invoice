@@ -26,8 +26,10 @@ export const fetchLoginFailure = error => {
 
 
 
-export const postLoginData = (logindata, history) => {
+export const postLoginData = (logindata, history,loginData) => {
     console.log("form logindata ===>", logindata)
+    console.log(loginData,"user login data while registring")
+    console.log("history in ", history)
     return async (dispatch) => {
         dispatch(fetchLoginRequest);
         try {

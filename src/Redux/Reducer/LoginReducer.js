@@ -1,7 +1,7 @@
 const initialState = {
     loading: false,
     userInfo: {},
-    token: '',
+    // token: '',
     error: '',
     companies: []
 }
@@ -18,7 +18,7 @@ export const loginReducer = (state = initialState, action) => {
             return {
 
                 loading: false,
-                token: action.payload.token,
+                // token: action.payload.token,
                 error: '',
                 companies: action.payload.companies,
             }

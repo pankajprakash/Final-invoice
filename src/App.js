@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Result from './Components/Result'
 import DownloadPage from './Components/DownloadPage';
+import newUpdatedData from './Components/NewUpdatedData';
 
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
           {/* <Route exact path="/form" component={Form} /> */}
           <Route exact path="/company" component={ComapnyReg}  />
           <Route exact path="/download" component={DownloadPage}  />
+          <Route exact path="/updatedInvoice" component={newUpdatedData}  />
+
+
+
           {/* <UserRegistration /> */}
       <ComapnyReg />
       <Form />

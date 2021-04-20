@@ -38,30 +38,47 @@ const Form = ({ history, location }) => {
   const [addMore, setAddmore] = useState({
     items: [
       {
-        productName: "",
-        quantity: "",
-        description: "",
-        unitPrice: "",
-        total: "",
+        "productName": "",
+        "quantity": "",
+        "description": "",
+        "unitPrice": "",
+        "total": "",
       },
     ],
   });
 
   const addItems = (e) => {
-    e.preventDefault();
-    setAddmore((prevState) => ({
-      //here hName was newCon
+   
+    // setAddmore((prevState) => ({
+      
+    //   //here hName was newCon
+    //   items: [
+    //      ...prevState.items,
+    //     {
+    //       "productName":"",
+    //     "quantity": "",
+    //     "description": "",
+    //     "unitPrice": "",
+    //     "total": "",
+    //     },
+    //   ],
+    // }));
+
+
+
+     setAddmore({
       items: [
-        ...prevState.items,
         {
-          productName: "",
-          quantity: "",
-          description: "",
-          unitPrice: "",
-          total: "",
+          "productName": "",
+          "quantity": "",
+          "description": "",
+          "unitPrice": "",
+          "total": "",
         },
       ],
-    }));
+    })
+
+    
   };
 
 
@@ -76,7 +93,7 @@ const Form = ({ history, location }) => {
   useEffect(() => {
     dispatch(CompanyData());
     dispatch(postLoginData())
-    console.log(location.state, "user reg data in form")
+    console.log(location, "user reg data in form")
     console.log(selectedOrg, "sel org")
     console.log(selectedOrg, "gggggggggggggggggggggggggggggggggggggggggggggg")
     // console.log(selOrg,"local s data")
@@ -131,7 +148,7 @@ const Form = ({ history, location }) => {
     history.push("/");
   }
 
-
+// for organisation
   const selectedOrg = JSON.parse(localStorage.getItem("selected_company"))
 
 
@@ -139,13 +156,6 @@ const Form = ({ history, location }) => {
 
 
 
-     
-if (localStorage.getItem('user_token'))
-{
-  <Redirect push to="/form"/>
-}
-else
-{<Redirect push to="/"/>}
 
 
   return (
@@ -155,7 +165,20 @@ else
         <div className="outer">
           {/* {JSON.stringify(state1)} */}
           <form onSubmit={handleSubmit(onSubmit)} className="form-data">
+            <Row>
+              <div className="btn-head1">
+          <div>
             <h5 className="top-head"><b >INVOICE MANAGEMENT</b></h5>
+            </div> 
+
+            <div className="log-btn"> 
+                <button className="addnew-btn" onClick={logoutFun}><i class="far fa-plus-square"> logout </i></button>
+              </div> 
+                </div>
+                </Row>
+          
+
+            
             <Row className="firstRow">
               <Col md="4">
                 <label for="status">From</label>
@@ -203,7 +226,7 @@ else
               </Col>
 
 
-              <Col md="3">
+              {/* <Col md="3">
                 <label for="product name">Product Name</label>
                 <input
                   type="text"
@@ -236,7 +259,7 @@ else
                   {errors.quantity && "Password is required*"}
                 </p>
 
-              </Col>
+              </Col> */}
 
               <Col md="3">
                 <label for="dueDate">Due Date</label>
@@ -268,7 +291,7 @@ else
             </Row>
 
 
-            <Row className="firstRow">
+            {/* <Row className="firstRow">
               <Col md="4">
                 <label for="description">Description</label>
                 <input
@@ -311,7 +334,7 @@ else
                       {errors.total && "Password is required*"}
                     </p>
                 
-                </Col>
+                </Col> */}
 
               {/* <Col md="3">
                 <label for="mode of payment">Mode of Payment</label>
@@ -322,7 +345,7 @@ else
                 </select>
               </Col> */}
 
-            </Row>
+            {/* </Row> */}
             {/* 
             <Row className="first">
               <Col md="3">
@@ -340,43 +363,33 @@ else
             </Row> */}
             <Row className="firstRow">
 
-              <Col md="4">
-                <label for="status">Status</label>
-                <select {...register("status",{required:true})} className="select">
-                  <option value="pending">Pending</option>
-                  <option value="underReview">Under Review</option>
-                  <option value="approved">Approved</option>
-                </select>
-
-                <p className="para">
-                      {errors.status && "Password is required*"}
-                    </p>
-              </Col>
+            
 
 
             </Row>
               
          {/*mapping newly created data */}
 
-         {addMore.items.map((e) => (
+{addMore.items.map((e) => (
               <Row className="first">
-                <Col md="3">
+                <Col md="4">
                   <label for="product name">Product Name</label>
                   <input
                     type="text"
                     {...register("ProductName", {
-                      max: 3,
+                      
                     })}
                   />{" "}
                 </Col>
 
-                <Col md="3">
+                <Col md="4">
                 <label for="Quantity">Quantity</label>
                 <input
-                  type="text"
+                  type="number"
                   {...register("quantity", {
-                    max: 3,
+                  
                   })}
+                  placeholder="enter quantity"
                 />
               </Col>
 
@@ -410,6 +423,19 @@ else
                   })}
                 /></Col>   
 
+<Col md="4">
+                <label for="status">Status</label>
+                <select {...register("status",{required:true})} className="select">
+                  <option value="pending">Pending</option>
+                  <option value="underReview">Under Review</option>
+                  <option value="approved">Approved</option>
+                </select>
+
+                <p className="para">
+                      {errors.status && "Password is required*"}
+                    </p>
+              </Col>
+
 
 
 
@@ -424,16 +450,11 @@ else
 
 
 
-            <Row className="firstRow">
-              <Col className="button-column"  >
-                <button className="addnew-btn" onClick={logoutFun}><i class="far fa-plus-square"> logout </i></button>
-              </Col>
-
-            </Row>
+          
 
             <Row className="firstRow">
               <Col className="button-column"  >
-                <button className="addnew-btn" onClick={ addItems}><i class="far fa-plus-square"> Add More </i></button>
+                <button className="addnew-btn" onClick={() => addItems()}><i class="far fa-plus-square"> Add More </i></button>
               </Col>
 
             </Row>

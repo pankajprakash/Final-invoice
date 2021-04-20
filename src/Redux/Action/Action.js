@@ -49,7 +49,7 @@ export const postData = (data, history) => {
 
           const loginData = { email: data.email, password: data.password }
 
-          dispatch(postLoginData(loginData, history))
+          dispatch(postLoginData(loginData,history))
 
           setTimeout(() => {
             history.push('/form', {

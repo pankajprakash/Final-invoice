@@ -49,7 +49,7 @@ const signin=()=>{
                       autoComplete="off"
                       {...register("companyName", {
                         required: true,
-                        max: 3,
+                        
                       })}
                     />
                     <p className="para">
@@ -68,7 +68,7 @@ const signin=()=>{
                       autoComplete="off"
                       {...register("webAddress", {
                         required: true,
-                        max: 3,
+                      
                       })}
                     />
                     <p className="para">
@@ -82,6 +82,7 @@ const signin=()=>{
                     <label for="contact">Conatct</label>
 
                     <InputS
+                      placeholder="contact number"
                       type="text"
                       autoComplete="off"
                       {...register("contact", {
@@ -97,7 +98,7 @@ const signin=()=>{
                     <label for="email">Email</label>
 
                     <InputS
-                      placeholder="KeyMouseit"
+                      placeholder="abc@example.com"
                       type="text"
                       autoComplete="off"
                       {...register("email", {
@@ -115,6 +116,7 @@ const signin=()=>{
                     <label for="Address">Address</label>
 
                     <InputS
+                    placeholder="Address"
                       type="text"
                       autoComplete="off"
                       {...register("address", {
@@ -130,6 +132,7 @@ const signin=()=>{
                     <label for="City">City</label>
 
                     <InputS
+                      placeholder="city"
                       type="text"
                       autoComplete="off"
                       {...register("city", {
@@ -147,6 +150,7 @@ const signin=()=>{
                     <label for="State">State</label>
 
                     <InputS
+                      placeholder="State"
                       type="text"
                       autoComplete="off"
                       {...register("state", {
@@ -173,6 +177,7 @@ const signin=()=>{
                     <label for="Password">Password</label>
 
                     <InputS
+                      placeholder="password"
                       type="password"
                       autoComplete="off"
                       {...register("password", {
@@ -188,6 +193,7 @@ const signin=()=>{
                     <label for="ConfirmPassword">Confirm password</label>
 
                     <InputS
+                      placeholder="Confirm Password"
                       type="password"
                       autoComplete="off"
                       {...register("confirmPassword", {
