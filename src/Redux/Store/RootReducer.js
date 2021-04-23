@@ -7,6 +7,8 @@ import {ToReducer} from '../Reducer/ToCompanyReducer';
 import {allInvoiceReducer} from './../Reducer/allInvoiceReducer';
 import { previewInvoiceReducer }from './../Reducer/previewInvoiceReducer';
 import{InvoiceUpdateReducer} from './../Reducer/UpdateInvoice'
+import ProductReducer from '../Reducer/ProductReducer';
+
 
 export const rootReducer = combineReducers({
    Data : apiReducer,
@@ -16,7 +18,8 @@ export const rootReducer = combineReducers({
    companyId:ToReducer,
    allInvoices: allInvoiceReducer,
    previewInvoice:previewInvoiceReducer,
-   updateInvoice:InvoiceUpdateReducer
+   updateInvoice:InvoiceUpdateReducer,
+   products:ProductReducer
 
 })
 

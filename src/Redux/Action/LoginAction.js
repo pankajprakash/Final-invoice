@@ -26,9 +26,8 @@ export const fetchLoginFailure = error => {
 
 
 
-export const postLoginData = (logindata, history,loginData) => {
+export const postLoginData = (logindata, history) => {
     console.log("form logindata ===>", logindata)
-    console.log(loginData,"user login data while registring")
     console.log("history in ", history)
     return async (dispatch) => {
         dispatch(fetchLoginRequest);
@@ -42,12 +41,21 @@ export const postLoginData = (logindata, history,loginData) => {
             fetchLoginSuccess({
                 'token': x.data.token,
                 'companies': x.data.companies
-            })
-            history.push('/form')
+               })
+
+
+             
+        setTimeout(() => {
+             
+    history.push('/form')
+        }, 1);
+
+            
         }
 
         catch (err) {
             toast.error(err.response.data.password);
+            toast.error(err.response.data.detail);
             toast.error(err.response.data.email);
             toast.error(err.response.data.Detail);
             console.log(err.response.data);

@@ -15,7 +15,8 @@ import {
 import Result from './Components/Result'
 import DownloadPage from './Components/DownloadPage';
 import newUpdatedData from './Components/NewUpdatedData';
-
+import ViewInvoice from './Components/ViewInvoice';
+  
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route exact path="/company" component={ComapnyReg}  />
           <Route exact path="/download" component={DownloadPage}  />
           <Route exact path="/updatedInvoice" component={newUpdatedData}  />
+           <Route exact path="/view_invoice" component={ViewInvoice}  />
 
 
 

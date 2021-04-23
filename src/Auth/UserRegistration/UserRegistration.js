@@ -90,6 +90,7 @@ const UserRegistration = ({ history }) => {
     <>
       <Container>
         <Back>
+
           <form onSubmit={handleSubmit(onSubmit)} className="form-data">
             <h5 className="top-head">
               <div className="hover-effect">
@@ -358,20 +359,6 @@ const UserRegistration = ({ history }) => {
                         )
                       }}
                     />
-
-                    {/* <Select
-                                                isMulti
-                                                name="colors"
-                                                options={mapedData}
-                                                className="basic-multi-select"
-                                                classNamePrefix="select"
-                                               
-                                            /> */}
-
-
-
-
-
 
                   </Col>
                 </Row>

@@ -226,3 +226,34 @@ margin-left: 650px;
 
 
 }
+
+.navbar
+{
+  background-color: #4589FE;
+  display: flex;
+}
+
+.addnew-btn{
+  padding: 3px;
+  border-radius: 20px;
+  border: none;
+  margin-left: 30px;
+}
+.left-side
+{
+  display: flex;
+}
+.fa, .fas {
+  font-weight: 900;
+  font-size: 29px;
+}
+
+b{
+  width: 300px !important;
+}
+
+
+.date-picker
+{
+  width: 309px !important;
+}

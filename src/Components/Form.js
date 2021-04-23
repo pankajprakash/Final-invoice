@@ -15,6 +15,10 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import Select from 'react-select';
+
+import { productData } from './../Redux/Action/ProductAction'
+import { getAllByText } from "@testing-library/dom";
 
 const Form = ({ history, location }) => {
 
@@ -48,9 +52,9 @@ const Form = ({ history, location }) => {
   });
 
   const addItems = (e) => {
-   
+
     // setAddmore((prevState) => ({
-      
+
     //   //here hName was newCon
     //   items: [
     //      ...prevState.items,
@@ -66,7 +70,7 @@ const Form = ({ history, location }) => {
 
 
 
-     setAddmore({
+    setAddmore({
       items: [
         {
           "productName": "",
@@ -78,7 +82,7 @@ const Form = ({ history, location }) => {
       ],
     })
 
-    
+
   };
 
 
@@ -92,7 +96,8 @@ const Form = ({ history, location }) => {
 
   useEffect(() => {
     dispatch(CompanyData());
-    dispatch(postLoginData())
+    // dispatch(postLoginData())
+    dispatch(productData())
     console.log(location, "user reg data in form")
     console.log(selectedOrg, "sel org")
     console.log(selectedOrg, "gggggggggggggggggggggggggggggggggggggggggggggg")
@@ -127,9 +132,13 @@ const Form = ({ history, location }) => {
 
 
   const onSubmit = (invoicedata) => {
-    //  getValues(invoicedata)
-    dispatch(postInvoiceData(invoicedata, history))
-    console.log(invoicedata)
+    
+  // const alldata={...invoicedata,
+  // productName:pro.map(e => e.label)}
+  //   //  getValues(invoicedata)
+  //   dispatch(postInvoiceData(alldata, history))
+    console.log(invoicedata, "invouice data itemsss")
+
 
     // setTimeout(() => {
 
@@ -148,37 +157,115 @@ const Form = ({ history, location }) => {
     history.push("/");
   }
 
-// for organisation
+  // for organisation
   const selectedOrg = JSON.parse(localStorage.getItem("selected_company"))
 
+  const [pro, setProducts] = useState([])
+  const [tax, setTax] = useState({
+    tax: '',
+    category: ''
+  })
+  //used new use selector for for product data
+  const productsData = useSelector(state => state.products.Product)
+
+ 
 
 
 
+  
+  const mappedProducts = productsData.map((e) =>
+
+  ({
+    label: e.productName,
+    value: e.id,
+    color: '#00B8D9',
+    category:e.category,
+    tax:e.tax
+  })
+  )
+console.log(mappedProducts)
 
 
+const allInvoice = () =>{
+  history.push("/download")
+}
 
+
+const[total,setTotal] = useState({
+  "quantity":'',
+  "unitPrice":'',
+  "total": ''
+
+})
+
+const setQuan = (e) => {
+  setTotal({...total,
+ [e.target.name]:e.target.value,
+ 
+  })
+  
+}
+
+const setTotalVal = () => {
+  setTotal({
+   
+      'total': total.quantity * total.unitPrice
+   
+     
+  })
+}
 
   return (
 
     <>
+
+
+ <div className="container-area">
+        <div className="header">
+          <div className="navbar">
+            <div className="left-side">
+            <i class="fas fa-user-alt"></i>
+              <div className="all-invoice-btn">
+                <button onClick={()=>allInvoice()} className="addnew-btn">Show Invoices</button>
+              </div>
+            </div>
+            <div className="right-side">
+              <div className="logout-btn">
+              <button className="addnew-btn" onClick={logoutFun}><i class="far fa-plus-square"> logout </i></button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Container>
+
         <div className="outer">
-          {/* {JSON.stringify(state1)} */}
+
+          {/* {JSON.stringify(productsData,"product-data")} */}
+         
+
           <form onSubmit={handleSubmit(onSubmit)} className="form-data">
+
+
             <Row>
               <div className="btn-head1">
-          <div>
-            <h5 className="top-head"><b >INVOICE MANAGEMENT</b></h5>
-            </div> 
+                <div>
+                  <h5 className="top-head"><b >INVOICE MANAGEMENT</b></h5>
+                  {/* {productsData.map((e) => (e.productName)
 
-            <div className="log-btn"> 
-                <button className="addnew-btn" onClick={logoutFun}><i class="far fa-plus-square"> logout </i></button>
-              </div> 
+                  )} */}
                 </div>
-                </Row>
-          
 
-            
+                <div className="log-btn">
+                  <button className="addnew-btn" onClick={logoutFun}><i class="far fa-plus-square"> logout </i></button>
+                </div>
+              </div>
+            </Row>
+
+
+
             <Row className="firstRow">
               <Col md="4">
                 <label for="status">From</label>
@@ -188,34 +275,42 @@ const Form = ({ history, location }) => {
                     <option value={e.id}>{e.companyName}</option>
                   ))}
 
-                  {/* <option value="606c540c3ac87255eb43225d">Tcs</option>
-                  <option value="606c540c3ac87255eb43225d">Wipro</option> */}
+
                 </select>
+
               </Col>
               <Col md="4">
                 <label for="Created By">Created By </label>
                 <input
                   type="text"
                   {...register('createdBy', {
-
+                    required: true
                   })}
                 />
 
+                <p className="para">
+                  {errors.createdBy && "this field can't be empty*"}
+                </p>
               </Col>
               <Col md="4">
                 <label for="To">To</label>
-                <select {...register("to")} className="select">
+                <select {...register("to", { required: true })} className="select">
 
                   {state.companyId.to.map((e) =>
                     <option value={e.id}>{e.name}</option>
                   )}
 
                 </select>
+                <p className="para">
+                  {errors.to && "this field can't be empty*"}
+                </p>
+
+
               </Col>
             </Row>
 
             <Row className="firstRow">
-              <Col md="3">
+              <Col md="4">
                 <label for="Notes">Notes</label>
                 <input
                   type="text"
@@ -223,45 +318,15 @@ const Form = ({ history, location }) => {
 
                   })}
                 />
+                <p className="para">
+                  {errors.Notes && "this field can't be empty*"}
+                </p>
               </Col>
 
 
-              {/* <Col md="3">
-                <label for="product name">Product Name</label>
-                <input
-                  type="text"
-                  {...register('ProductName', {
-                    required: true
 
 
-                  })}
-
-
-                />
-                <p className="para">
-                  {errors.ProductName && "Password is required*"}
-                </p>
-
-
-              </Col>
-
-              <Col md="3">
-                <label for="Quantity">Quantity</label>
-                <input
-                  type="text"
-                  {...register('quantity', {
-                    required: true
-
-
-                  })}
-                />
-                <p className="para">
-                  {errors.quantity && "Password is required*"}
-                </p>
-
-              </Col> */}
-
-              <Col md="3">
+              <Col md="4  ">
                 <label for="dueDate">Due Date</label>
                 {/* <Controller name="due_date" control={control} defaultValue={null}
                   render={
@@ -278,7 +343,7 @@ const Form = ({ history, location }) => {
                     (p) => {
                       console.log(`onChange, value`, p.fields)
                       return <DatePicker selected={p.field.value}
-                        placeholderText="select date   " onChange={p.field.onChange} />
+                        placeholderText="select date   " onChange={p.field.onChange} className="date-picker" />
 
                     }
 
@@ -288,159 +353,179 @@ const Form = ({ history, location }) => {
 
 
               </Col>
-            </Row>
-
-
-            {/* <Row className="firstRow">
-              <Col md="4">
-                <label for="description">Description</label>
-                <input
-                  type="text"
-                  {...register('Description', {
-
-                  })}
-                />
-              </Col>
 
               <Col md="4">
-                <label for="price">Price</label>
-                <input
-                  type="number"
-                  {...register('unitPrice', {
-                    required: true
-
-                  })}
-                />
-
-                <p className="para">
-                  {errors.unitPrice && "Password is required*"}
-                </p>
-
-              </Col>
-
-
-              <Col md="4">
-                <label for="Total">Total</label>
-                <input
-                  type="number"
-                  {...register('total', {
-                    required:true
-
-                  })}
-
-                  
-                />
-                  <p className="para">
-                      {errors.total && "Password is required*"}
-                    </p>
-                
-                </Col> */}
-
-              {/* <Col md="3">
-                <label for="mode of payment">Mode of Payment</label>
-                <select {...register("Payment of Method")} className="select">
-                  <option value="UPI">UPI</option>
-                  <option value="Net banking">Net Banking</option>
-                  <option value="Debit Card">Debit Card</option>
-                </select>
-              </Col> */}
-
-            {/* </Row> */}
-            {/* 
-            <Row className="first">
-              <Col md="3">
-                <label for="gst number">GST Number</label>
-                <input type="text" onChange={change} name="gstNumber" value={initial.gstNumber} />
-              </Col>
-              <Col md="3">
-                <label for="tax">Tax</label>
-                <input type="text" onChange={change} name="tax" value={initial.tax} /></Col>
-             
-              <Col md="3">
-                <label for="notes">Notes</label>
-                <input type="text" onChange={change} name="notes" value={initial.notes} />
-              </Col>
-            </Row> */}
-            <Row className="firstRow">
-
-            
-
-
-            </Row>
-              
-         {/*mapping newly created data */}
-
-{addMore.items.map((e) => (
-              <Row className="first">
-                <Col md="4">
-                  <label for="product name">Product Name</label>
-                  <input
-                    type="text"
-                    {...register("ProductName", {
-                      
-                    })}
-                  />{" "}
-                </Col>
-
-                <Col md="4">
-                <label for="Quantity">Quantity</label>
-                <input
-                  type="number"
-                  {...register("quantity", {
-                  
-                  })}
-                  placeholder="enter quantity"
-                />
-              </Col>
-
-                  <Col md="4">
-                <label for="description">Description</label>
-                <input
-                  type="text"
-                  {...register('Description', {
-
-                  })}
-                />
-              </Col>
-
-              <Col md="4">
-                <label for="price">Price</label>
-                <input
-                  type="number"
-                  {...register('unitPrice', {
-
-                  })}
-                />
-              </Col>
-
-
-              <Col md="4">
-                <label for="Total">Total</label>
-                <input
-                  type="number"
-                  {...register('total', {
-
-                  })}
-                /></Col>   
-
-<Col md="4">
                 <label for="status">Status</label>
-                <select {...register("status",{required:true})} className="select">
+                <select {...register("status", { required: true })} className="select">
                   <option value="pending">Pending</option>
                   <option value="underReview">Under Review</option>
                   <option value="approved">Approved</option>
                 </select>
 
                 <p className="para">
-                      {errors.status && "Password is required*"}
-                    </p>
+                  {errors.status && "Password is required*"}
+                </p>
+              </Col>
+            </Row>
+
+
+            <Row className="firstRow">
+
+
+
+
+            </Row>
+
+            {/*mapping newly created data */}
+
+
+            <Row className="first">
+
+            {/* {JSON.stringify(pro,"tax vali state")} */}
+              <Col md="4">
+
+                <label for="product name">Product Name</label>
+
+                {/* <select {...register("productName", { required: true })} className="select">
+                  {productsData.map((e) =>
+             
+            
+                    <option value={e.productName} onClick={(e) => getTax(e)}>{e.productName}</option>
+                    )}
+                  </select> */}
+                <Controller
+                  as={Select}
+                  name="productName"
+                  options={mappedProducts}
+                  isMulti
+                  control={control}
+                  render={(p) => {
+                    const { ref, onChange, value } = p.field
+                    return (
+                      <Select
+                        inputRef={ref}
+                        classNamePrefix="addl-class"
+                        options={mappedProducts}                   
+                        value={mappedProducts.find(e => (e.value === value))}
+                        onChange={val => setProducts(val)}
+
+                      />
+                    )
+                  }}
+                />
+
+
+
+                <p className="para">
+                  {errors.to && "this field can't be empty*"}
+                </p>
+              </Col>
+
+              <Col md="4">
+            
+              <label for="Quantity">Category</label>
+              <input
+                  type="text"
+                  value={pro.category}
+                  placeholder="Category"
+                  disabled
+                /> 
+              </Col>
+
+              <Col md="4">
+              <label for="Quantity">Tax</label>
+      
+
+              <input
+                  type="text"
+                  value={pro.tax}
+                  placeholder="Tax"
+                  disabled
+                /> 
               </Col>
 
 
+              <Col md="4">
+                {JSON.stringify(total)}
+                <label for="Quantity">Quantity</label>
+                <input
+                  type="number"
+                  name="quantity"
+                  value={total.quantity}
+                  {...register("quantity", {
+                    required: true
+
+                  })}
+                  
+                  onChange={setQuan}
+                  placeholder="enter quantity"
+                />
+                <p className="para">
+                  {errors.to && "this field can't be empty*"}
+                </p>
+              </Col>
+
+              <Col md="4">
+                <label for="description">Description</label>
+                <input
+                  type="text"
+                  {...register('Description', {
+                    required: true
+
+                  })}
+                />
+                <p className="para">
+                  {errors.to && "this field can't be empty*"}
+                </p>
+              </Col>
+
+              <Col md="4">
+                <label for="price">Price</label>
+                <input
+                  type="number"
+                  name="unitPrice"
+                  value={total.unitPrice}
+                  
+                  {...register('unitPrice', {
+                    required: true
+
+                  })}
+
+                  onChange={(e) => { setQuan(e); setTimeout(() => {
+                    setTotalVal();
+                  }, 1000);} }
+                 
+                />
+                <p className="para">
+                  {errors.to && "this field can't be empty*"}
+                </p>
+              </Col>
 
 
-              </Row>
-            ))}
+              <Col md="4">
+                <label for="Total">Total</label>
+                <input
+                  type="number"
+                  {...register('total', {
+                    required: true
+
+                  })}
+                  
+                  value={total.total}
+                  // onClick={}
+                  
+                />
+                <p className="para">
+                  {errors.to && "this field can't be empty*"}
+                </p>
+              </Col>
+
+            
+
+
+
+
+            </Row>
 
 
 
@@ -450,7 +535,8 @@ const Form = ({ history, location }) => {
 
 
 
-          
+
+
 
             <Row className="firstRow">
               <Col className="button-column"  >
@@ -477,3 +563,4 @@ const Form = ({ history, location }) => {
 }
 
 export default Form
+
