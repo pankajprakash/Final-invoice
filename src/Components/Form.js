@@ -48,32 +48,46 @@ const Form = ({ history, location }) => {
     ],
   });
 
+
+  const [isEmpty, setIsEmpty] = useState(0);
+
   const addItems = (e) => {
-    // setAddmore((prevState) => ({
+    e.preventDefault();
+    setIsEmpty(isEmpty + 1)
+    const values = [...addMore.items];
 
-    //   //here hName was newCon
-    //   items: [
-    //      ...prevState.items,
-    //     {
-    //       "productName":"",
-    //     "quantity": "",
-    //     "description": "",
-    //     "unitPrice": "",
-    //     "total": "",
-    //     },
-    //   ],
-    // }));
+    values.push({
 
+      productName: null,
+      quantity: null,
+      description: null,
+      unitPrice: null,
+      total: null,
+
+    })
+
+
+
+
+
+    console.log(values, "values in addItems button")
+
+    setAddmore({ items: [...values] })
+
+    console.log(addMore, "add more state")
+
+    
+  };
+
+  const deleteItem = (e, index) => {
+    setIsEmpty(isEmpty - 1)
+    console.log(index, "index issssssssssssssssssssssssssssss");
+    const values = [...addMore.items];
+    console.log(values, "we are che");
+    values.splice(index, 1);
+    console.log(values, "cut val");
     setAddmore({
-      items: [
-        {
-          productName: "",
-          quantity: "",
-          description: "",
-          unitPrice: "",
-          total: "",
-        },
-      ],
+      items: values,
     });
   };
 
@@ -88,51 +102,46 @@ const Form = ({ history, location }) => {
 
   useEffect(() => {
     dispatch(CompanyData());
-    // dispatch(postLoginData())
+
     dispatch(productData());
     console.log(location, "user reg data in form");
     console.log(selectedOrg, "sel org");
-    console.log(selectedOrg, "gggggggggggggggggggggggggggggggggggggggggggggg");
+    
     // console.log(selOrg,"local s data")
   }, []);
   // const onSubmit = (invoicedata) => dispatch(postInvoiceData
 
   //   (invoicedata));
-  const getValues = (invoicedata) => {
-    setstate1({
-      from: invoicedata.from,
-      to: invoicedata.to,
-      createdBy: invoicedata.createdBy,
-      items: {
-        productName: invoicedata.ProductName,
-        quantity: invoicedata.quantity,
-        description: invoicedata.Description,
-        unitPrice: invoicedata.unitPrice,
-        total: invoicedata.total,
-      },
-      dueDate: invoicedata.dueDate,
-      status: invoicedata.status,
-    });
-
-    setTimeout(() => { }, 500);
-  };
-
+ 
   const onSubmit = (invoicedata) => {
 
-    //  getValues(invoicedata)
-    dispatch(postInvoiceData(invoicedata, history))
-    console.log(invoicedata, "invouice data itemsss");
+    console.log(invoicedata,"invoice*************")
+    console.log(pro,"productsss*******************")
+    for(let i=0;i<pro.length;i++){
+      const data= [{...invoicedata,
+     
+        productName:pro[i].label,
+        quantity:pro[i].quantity,
+        unitPrice:pro[i].price,
+        total:total.total
+        }]
 
-    setTimeout(() => {
+        console.log(data,"final data----------------------")
+        dispatch(postInvoiceData(data, history))
+    }
+   
+ 
+   
 
-      history.push("/download")
+  
 
-    }, 1000);
+  //  setTimeout(() => {
+  //    history.push("/download")
+  //  }, 1000);
+   
+ }
 
 
-
-    console.log("dispatched data", state.companyId.to);
-  };
 
   const logoutFun = () => {
     localStorage.clear();
@@ -147,6 +156,8 @@ const Form = ({ history, location }) => {
     tax: "",
     category: "",
   });
+ 
+ 
   //used new use selector for for product data
   const productsData = useSelector((state) => state.products.Product);
 
@@ -157,27 +168,35 @@ const Form = ({ history, location }) => {
     category: e.category,
     tax: e.tax,
   }));
-  console.log(mappedProducts);
+
+  
+  // console.log(mappedProducts);
 
   const allInvoice = () => {
     history.push("/download");
   };
 
   const [total, setTotal] = useState({
-    quantity: "",
-    unitPrice: "",
     total: "",
   });
 
-  const setQuan = (e) => {
-    setTotal({ ...total, [e.target.name]: e.target.value });
-  };
+ useEffect(() => {
+  setTotal({...total, total : pro.reduce((sum, item) => {
+    const { tax, quantity, price } = item;
+    if (tax && quantity && price) {
+      const total = quantity * price;
+      const totalTax = 0.01 * tax * total;
+      return sum + total + totalTax
+    }
+    return sum;
+  }, 0) })
+ }, [pro])
 
-  const setTotalVal = () => {
-    setTotal({
-      total: total.quantity * total.unitPrice,
-    });
-  };
+
+
+
+
+
 
   return (
     <>
@@ -195,7 +214,7 @@ const Form = ({ history, location }) => {
             <div className="right-side">
               <div className="logout-btn">
                 <button className="addnew-btn" onClick={logoutFun}>
-                  Logout <i class="fas fa-sign-out-alt"></i>
+                  <i class="far fa-plus-square"> logout </i>
                 </button>
               </div>
             </div>
@@ -205,9 +224,13 @@ const Form = ({ history, location }) => {
 
       <Container>
         <div className="outer">
-          {/* {JSON.stringify(productsData,"product-data")} */}
+        
 
-          <form onSubmit={handleSubmit(onSubmit)} className="form-data">
+          <form  onSubmit={e=>{
+            e.preventDefault();
+            console.log({errors})
+            handleSubmit(onSubmit)(e)
+            }} className="form-data" >
             <Row>
               <div className="btn-head1">
                 <div>
@@ -219,11 +242,11 @@ const Form = ({ history, location }) => {
                   )} */}
                 </div>
 
-                {/* <div className="log-btn">
+                <div className="log-btn">
                   <button className="addnew-btn" onClick={logoutFun}>
                     <i class="far fa-plus-square"> logout </i>
                   </button>
-                </div> */}
+                </div>
               </div>
             </Row>
 
@@ -265,7 +288,7 @@ const Form = ({ history, location }) => {
               </Col>
             </Row>
 
-            <Row className="">
+            <Row className="first">
               <Col md="4">
                 <label for="Notes">Notes</label>
                 <input type="text" {...register("Notes", {})} />
@@ -276,22 +299,13 @@ const Form = ({ history, location }) => {
 
               <Col md="4  ">
                 <label for="dueDate">Due Date</label>
-                {/* <Controller name="due_date" control={control} defaultValue={null}
-                  render={
-                    ({onChange, value})=><DatePicker   onChange={onChange} selected={value}
-                    
-                    placeholderText="select date" />
-
-                  }
-                  />  */}
-
                 {
                   <Controller
                     name="dueDate"
                     control={control}
                     defaultValue={null}
                     render={(p) => {
-                      console.log(`onChange, value`, p.fields);
+                      console.log(`onChange, value`, p.field);
                       return (
                         <DatePicker
                           selected={p.field.value}
@@ -321,126 +335,146 @@ const Form = ({ history, location }) => {
                 </p>
               </Col>
             </Row>
-
-            <Row className=""></Row>
+            <Row className="first"></Row>
 
             {/*mapping newly created data */}
 
-            <Row className="first">
-              {/* {JSON.stringify(pro,"tax vali state")} */}
-              <Col md="4">
-                <label for="product name">Product Name</label>
 
-                {/* <select {...register("productName", { required: true })} className="select">
-                  {productsData.map((e) =>
-             
-            
-                    <option value={e.productName} onClick={(e) => getTax(e)}>{e.productName}</option>
-                    )}
-                  </select> */}
-                <Controller
-                  as={Select}
-                  name="productName"
-                  options={mappedProducts}
-                  isMulti
-                  control={control}
-                  render={(p) => {
-                    const { ref, onChange, value } = p.field;
-                    return (
-                      <Select
-                        inputRef={ref}
-                        classNamePrefix="addl-class"
-                        options={mappedProducts}
-                        value={mappedProducts.find((e) => e.value === value)}
-                        onChange={(val) => setProducts(val)}
-                      />
-                    );
-                  }}
-                />
+            {addMore.items.map((e, index) => (
+              <Row className="first">
+                {/* {JSON.stringify(pro,"tax vali state")} */}
+                <Col md="2">
+                  <label for="product name">Product Name</label>
 
-                <p className="para">
-                  {errors.to && "this field can't be empty*"}
-                </p>
-              </Col>
+                 
+                  <Controller
+                    as={Select}
+                    name="productName"
+                    options={mappedProducts}
+                    isMulti
+                    control={control}
+                    render={(p) => {
+                      const { ref, onChange, value } = p.field;
+                      return (
+                        <Select
+                          inputRef={ref}
+                          classNamePrefix="addl-class"
+                          options={mappedProducts}
+                          value={mappedProducts.find((e) => e.value === value)}
+                          onChange={(val) => setProducts(oldVal => {
+                            let newVal = [...oldVal]
+                            if (!newVal[index]) {
+                              newVal[index] = {};
+                            }
+                            newVal[index] = val;
+                            return newVal
+                          })}
+                        />
+                      );
+                    }}
+                  />
 
-              <Col md="4">
-                <label for="Quantity">Category</label>
-                <input
-                  type="text"
-                  value={pro.category}
-                  placeholder="Category"
-                  disabled
-                />
-              </Col>
+                  <p className="para">
+                    {errors.to && "this field can't be empty*"}
+                  </p>
+                </Col>
 
-              <Col md="4">
-                <label for="Quantity">Tax</label>
+                <Col md="2">
+                  <label for="category">Category</label>
+                  <input
+                    type="text"
+                    value={pro && pro[index]?.category}
+                    placeholder="Category"
+                    disabled
+                  />
+                </Col>
 
-                <input type="text" value={pro.tax} placeholder="Tax" disabled />
-              </Col>
+                <Col md="2">
+                  <label for="tax">Tax</label>
 
-              <Col md="4">
-                {/* {JSON.stringify(total)} */}
-                <label for="Quantity">Quantity</label>
-                <input
-                  type="number"
-                  name="quantity"
-                  value={total.quantity}
-                  {...register("quantity", {
-                    required: true,
-                  })}
-                  onChange={setQuan}
-                  placeholder="enter quantity"
-                />
-                <p className="para">
-                  {errors.to && "this field can't be empty*"}
-                </p>
-              </Col>
+                  <input
+                    type="text"
+                    value={pro && pro[index]?.tax}
+                    placeholder="Tax"
+                    disabled
+                  />
+                </Col>
 
-              <Col md="4">
-                <label for="description">Description</label>
-                <input
-                  type="text"
-                  {...register("Description", {
-                    required: true,
-                  })}
-                  placeholder="Description"
-                />
-                <p className="para">
-                  {errors.to && "this field can't be empty*"}
-                </p>
-              </Col>
+                <Col md="2">
+                  {/* {JSON.stringify(total)} */}
+                  <label for="Quantity">Quantity</label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={pro && pro[index]?.quantity}
+                    // {...register("quantity", {
+                    //   required: true,
+                    // })}
+                    onChange={(e) => setProducts(oldVal => {
+                      let newVal = [...oldVal]
+                      if (!newVal[index]) {
+                        newVal[index] = {};
+                      }
+                      newVal[index].quantity = parseInt(e.target.value) || "";
+                      return newVal
+                    })}
+                    placeholder="enter quantity"
+                  />
+                  <p className="para">
+                    {errors.to && "this field can't be empty*"}
+                  </p>
+                </Col>
 
-              <Col md="4">
-                <label for="price">Price</label>
-                <input
-                  type="number"
-                  name="unitPrice"
-                  value={total.unitPrice}
-                  {...register("unitPrice", {
-                    required: true,
-                  })}
-                  onChange={(e) => {
-                    setQuan(e);
-                  }}
-                />
-                <p className="para">
-                  {errors.to && "this field can't be empty*"}
-                </p>
-              </Col>
 
+
+                <Col md="2">
+                  <label for="price">Price</label>
+                  <input
+                    type="number"
+                    name="unitPrice"
+                    value={pro[index]?.price}
+                    onChange={(e) => setProducts(oldVal => {
+                      let newVal = [...oldVal]
+                      if (!newVal[index]) {
+                        newVal[index] = {};
+                      }
+                      newVal[index].price = parseInt(e.target.value) || "";
+                      return newVal
+                    })}
+                  />
+                  <p className="para">
+                    {errors.to && "this field can't be empty*"}
+                  </p>
+
+
+                </Col>
+                <Col md="2">
+                  <div style={{ display: 'flex',justifyContent:'space-evenly' }}>
+                    <button className="addnew" onClick={(e) => addItems(e)}>
+                      <i class="far fa-plus-square">  </i>
+
+
+                    </button>
+                    {isEmpty === 0 ? "" : <button className="subnew" onClick={deleteItem}  > <i class="far fa-minus-square" >  </i></button>}
+                  </div>
+
+                </Col>
+              </Row>
+            ))}
+
+            <Row>
               <Col md="4">
                 <label for="Total">Total</label>
+                {/* {
+                  JSON.stringify(pro)
+                } */}
                 <input
                   type="number"
-                  {...register("total", {
-                    required: true,
-                  })}
-                  value={
-                    ((parseFloat(total.unitPrice) || 0) *
-                      (parseFloat(total.quantity) || 0)) * (1 + (0.01) * (parseFloat(pro.tax) || 0))
-                  }
-                // onClick={}
+                  // {...register("total", {
+                  //   required: true,
+                  // })}
+                  value={total.total}
+                  disabled
                 />
                 <p className="para">
                   {errors.to && "this field can't be empty*"}
@@ -448,17 +482,10 @@ const Form = ({ history, location }) => {
               </Col>
             </Row>
 
-            <Row className="firstRow">
-              <Col className="button-column">
-                <button className="addnew-btn" onClick={() => addItems()}>
-                  <i class="far fa-plus-square"> Add More </i>
-                </button>
-              </Col>
-            </Row>
 
             <Row className="firstRow">
               <Col className="button-column">
-                <button className="submit-btn">SUBMIT</button>
+                <button type='submit' className="submit-btn">SUBMIT</button>
               </Col>
             </Row>
           </form>

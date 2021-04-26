@@ -86,6 +86,7 @@ const UserRegistration = ({ history }) => {
 
 
 
+
   return (
     <>
       <Container>
