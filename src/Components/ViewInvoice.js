@@ -1,11 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
+import moment from 'moment'
 const ViewInvoice = ({ location }) => {
   useEffect(() => {
-    console.log(location, "data in loacayipj");
+    console.log(location, "data in loacation");
   }, []);
+
+
+
+  const today = moment();
   return (
     <>
-      <div>
+
+
+<div>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,7 +38,7 @@ const ViewInvoice = ({ location }) => {
                 style={{
                   margin: "0px",
                   paddingTop: "21px",
-                  textTransform: "uppercase",
+                  textTransform: "uppercase", 
                   color: "#085394",
                   fontSize: "70px",
                 }}
@@ -51,7 +58,9 @@ const ViewInvoice = ({ location }) => {
                 </p>
               </div>
             </div>
-            {/*------bill---*/}
+         
+
+
             <div
               className="section"
               style={{
@@ -74,6 +83,9 @@ const ViewInvoice = ({ location }) => {
                   To: {location.state.to.companyName} <br />
                   {location.state.to.address}
                   <br />
+
+
+                
                   {location.state.to.state}
                 </h4>
               </div>
@@ -96,6 +108,8 @@ const ViewInvoice = ({ location }) => {
                     fontSize: "16px",
                     fontWeight: 400,
                     margin: "7px 0px",
+                    // fontSize:"18px"
+                 
                   }}
                 >
                   Invoice #
@@ -107,6 +121,8 @@ const ViewInvoice = ({ location }) => {
                     fontSize: "16px",
                     margin: "7px 0px",
                     fontWeight: 400,
+                 
+                   
                   }}
                 >
                   invoice date
@@ -151,7 +167,11 @@ const ViewInvoice = ({ location }) => {
                     margin: "1px 0px",
                   }}
                 >
-                  {location.state.to.createdAt}
+                      {  today.format('dddd MMMM Do YYYY, h:mm:ss a')}
+                  {/* {location.state.to.createdAt} */}
+
+
+               
                 </p>
                 <p
                   style={{
@@ -169,11 +189,13 @@ const ViewInvoice = ({ location }) => {
                     margin: "1px 0px",
                   }}
                 >
-                  {location.state.DueDate}
+                  {moment(location.state.DueDate).format('dddd MMMM Do YYYY, h:mm:ss a')} 
+               
                 </p>
               </div>
             </div>
-            {/*-----table---*/}
+     
+
             <table
               style={{
                 paddingTop: "40px",
@@ -221,7 +243,7 @@ const ViewInvoice = ({ location }) => {
                       borderBottom: "2px solid #83D0BF",
                     }}
                   >
-                    description
+                  Unit Price
                   </th>
                   <th
                     style={{
@@ -234,23 +256,21 @@ const ViewInvoice = ({ location }) => {
                       borderBottom: "2px solid #83D0BF",
                     }}
                   >
-                    unit price
+                  
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td style={{ textAlign: "start", padding: "11px 31px" }}>
-                    {location.state.Quantity}
+                  {location.state.Quantity.map((e)=><li>{e.quantity}</li>)}
                   </td>
                   <td style={{ textAlign: "start", padding: "17px 21px" }}>
-                    {location.state.Product}
+                  {location.state.Product.map((e)=><li>{e.productName}</li>)}
                   </td>
-                  <td style={{ textAlign: "start", padding: "17px 21px" }}>
-                    {location.state.Description}
-                  </td>
+                 
                   <td style={{ textAlign: "left", paddingLeft: "57px" }}>
-                    {location.state.Price}
+                  {location.state.Price.map((e)=><li>{e.unitPrice}</li>)}
                   </td>
                 </tr>
                 <tr>
@@ -267,7 +287,7 @@ const ViewInvoice = ({ location }) => {
                       fontWeight: 700,
                     }}
                   >
-                    Total
+                    Total(included tax)
                   </td>
                   <td
                     style={{
@@ -284,7 +304,8 @@ const ViewInvoice = ({ location }) => {
                 </tr>
               </tbody>
             </table>
-            {/*-bottm--*/}
+      
+
             <div className="head">
               <h4
                 style={{
@@ -301,6 +322,15 @@ const ViewInvoice = ({ location }) => {
         </div>
         ​
       </div>
+
+
+ {/* Total:{location.state.Total}
+quantity:{location.state.Quantity.map((e)=><li>{e.quantity}</li>)}
+price:{location.state.Price.map((e)=><li>{e.unitPrice}</li>)}
+price:{location.state.Product.map((e)=><li>{e.productName}</li>)}
+       */}
+   
+
     </>
   );
 };

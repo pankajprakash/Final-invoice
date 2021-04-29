@@ -172,7 +172,7 @@ const signin=()=>{
                   </Col>
                 </Row>
 
-                <Row>
+                {/* <Row>
                   <Col md="6">
                     <label for="Password">Password</label>
 
@@ -223,7 +223,7 @@ const signin=()=>{
                       {errors.checkbox && "You must agree before submitting."}
                     </p>
                   </Col>
-                </Row>
+                </Row> */}
 
                 <Row>
                   <Col>

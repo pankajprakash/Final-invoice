@@ -106,13 +106,7 @@ export const postInvoiceData = (invoicedata,history) => {
     "from": invoicedata[0].from,
     "to": invoicedata[0].to,
     "createdBy": invoicedata[0].createdBy,
-    "items": {
-      "productName": invoicedata[0].productName,
-      "quantity": invoicedata[0].quantity,
-      "description": invoicedata[0].Description,
-      "unitPrice": invoicedata[0].unitPrice,
-      "total": invoicedata[0].total
-    },
+    "items": invoicedata[0].items,
     "dueDate": invoicedata[0].dueDate,
     "status": invoicedata[0].status
   }

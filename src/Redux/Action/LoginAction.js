@@ -35,6 +35,7 @@ export const postLoginData = (logindata, history) => {
             const x = await axios.post("http://192.168.1.78:9000/user/login", logindata)
             console.log(x.data.token,"token is from login ")
             console.log(x,"loginnnnnnnn")
+            
             const token = x.data.token
             localStorage.setItem("user_token", token);
             localStorage.setItem("selected_company",JSON.stringify(x.data.companies))
@@ -43,12 +44,14 @@ export const postLoginData = (logindata, history) => {
                 'companies': x.data.companies
                })
 
-
-             
+               if(postLoginData&& fetchLoginSuccess)
+               {
+                toast.success("User Login Successfully  !");
+               }
         setTimeout(() => {
              
     history.push('/form')
-        }, 1);
+        }, 1000);
 
             
         }

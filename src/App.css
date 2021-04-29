@@ -215,13 +215,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.btn-head1
-{
-  display: flex !important;
 
-
-  
-}
 .log-btn
 {
 margin-left: 650px;
@@ -248,6 +242,7 @@ margin-left: 650px;
 .fa, .fas {
   font-weight: 900;
   font-size: 29px;
+
 }
 
 b{
@@ -263,6 +258,7 @@ b{
 .addnew
 {
   margin-top: 33px;
+  border: none !important;
 
 
 
@@ -270,6 +266,90 @@ b{
 .subnew
 {
   margin-top: 33px;
+  border: none !important;
 
 
 }
+li{
+  list-style: none;
+}
+
+.phone-no
+{
+  width: 195px;
+}
+.styled-btn1
+{
+  padding: 4px 5px;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+
+.styled-btn2
+{
+  padding: 4px 5px;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  margin-left: 10px;
+}
+
+.styled-btn3
+{
+  padding: 4px 5px;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  margin-left: 10px;
+  
+
+}
+.styled-btn4
+{
+  padding: 4px 5px;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  margin-left: 10px;
+}
+
+.styled-btn5
+{
+  padding: 4px 5px;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #f4511e;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  margin-left: 10px;
+} 

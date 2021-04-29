@@ -32,6 +32,7 @@ export const postCompanyData = (companydata) => {
         if (response?.status === 200) {
           toast.success("Successfully Registered");
         }
+        
         console.log(response, "========response");
       })
 

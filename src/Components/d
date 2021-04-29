@@ -1499,4 +1499,613 @@ export default Form;
 
 
 
+ { moment("2021-03-31T18:30:00.000Z").format('DD/MM/YYYY')}
 
+
+
+
+
+
+
+
+
+
+
+
+ <div>
+        <meta charSet="UTF-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <title>Invoice</title>
+        <style
+          dangerouslySetInnerHTML={{
+            __html:
+              '\n      body {\n        font-family: "Montserrat", sans-serif;\n        margin: 0;\n        padding: 0;\n        box-sizing: border-box;\n      }\n​\n      .bg-set {\n        background-image: url();\n        background-size: cover;\n      }\n    ',
+          }}
+        />
+        <div className="bg-set">
+          <div className="content" style={{ padding: "0px 10px" }}>
+            <div className="title-head">
+              <h1
+                style={{
+                  margin: "0px",
+                  paddingTop: "21px",
+                  textTransform: "uppercase",
+                  color: "#085394",
+                  fontSize: "70px",
+                }}
+              >
+                invoice
+              </h1>
+              <div
+                className="tittle"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <p style={{ fontSize: "22px" }}>
+                  From: {location.state.from.companyName} <br />
+                  <br />
+                </p>
+                <p style={{ fontSize: "20px", textTransform: "uppercase" }}>
+                  invoice # kmit-1234
+                </p>
+              </div>
+            </div>
+            {/*------bill---*/}
+            <div
+              className="section"
+              style={{
+                display: "flex",
+                marginBottom: "42px",
+                justifyContent: "space-between",
+              }}
+            >
+              <div className="head">
+                <h4
+                  style={{
+                    textTransform: "uppercase",
+                    color: "#085394",
+                    fontSize: "16px",
+                    margin: "10px 0px",
+                    fontWeight: 400,
+                    lineHeight: "28px",
+                  }}
+                >
+                  To: {location.state.to.companyName} <br />
+                  {location.state.to.address}
+                  <br />
+                  {location.state.to.state}
+                </h4>
+              </div>
+              <div className="head">
+                <h4
+                  style={{
+                    textTransform: "uppercase",
+                    color: "#085394",
+                    fontSize: "16px",
+                    margin: 0,
+                    fontWeight: 400,
+                  }}
+                />
+              </div>
+              <div className="head" style={{ lineHeight: "33px" }}>
+                <h4
+                  style={{
+                    textTransform: "uppercase",
+                    color: "#085394",
+                    fontSize: "16px",
+                    fontWeight: 400,
+                    margin: "7px 0px",
+                  }}
+                >
+                  Invoice #
+                </h4>
+                <h4
+                  style={{
+                    textTransform: "uppercase",
+                    color: "#085394",
+                    fontSize: "16px",
+                    margin: "7px 0px",
+                    fontWeight: 400,
+                  }}
+                >
+                  invoice date
+                </h4>
+                <h4
+                  style={{
+                    textTransform: "uppercase",
+                    color: "#085394",
+                    fontSize: "16px",
+                    fontWeight: 400,
+                    margin: "7px 0px",
+                  }}
+                >
+                  status
+                </h4>
+                <h4
+                  style={{
+                    textTransform: "uppercase",
+                    color: "#085394",
+                    fontSize: "16px",
+                    fontWeight: 400,
+                    margin: "7px 0px",
+                  }}
+                >
+                  Due date
+                </h4>
+              </div>
+              <div className="head">
+                <h4
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: 400,
+                    margin: "1px 0px",
+                  }}
+                >
+                  {location.state.Id}
+                </h4>
+                <p
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: 400,
+                    margin: "1px 0px",
+                  }}
+                >
+                  {location.state.to.createdAt}
+                </p>
+                <p
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: 400,
+                    margin: "1px 0px",
+                  }}
+                >
+                  {location.state.Status}
+                </p>
+                <p
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: 400,
+                    margin: "1px 0px",
+                  }}
+                >
+                  {location.state.DueDate}
+                </p>
+              </div>
+            </div>
+            {/*-----table---*/}
+            <table
+              style={{
+                paddingTop: "40px",
+                tableLayout: "fixed",
+                width: "100%",
+                borderSpacing: 0,
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      textTransform: "uppercase",
+                      color: "#085394",
+                      padding: "10px 20px",
+                      fontSize: "21px",
+                      textAlign: "start",
+                      borderTop: "2px solid #83D0BF",
+                      borderBottom: "2px solid #83D0BF",
+                    }}
+                  >
+                    qty
+                  </th>
+                  <th
+                    style={{
+                      textTransform: "uppercase",
+                      color: "#085394",
+                      padding: "10px 20px",
+                      fontSize: "21px",
+                      textAlign: "start",
+                      borderTop: "2px solid #83D0BF",
+                      borderBottom: "2px solid #83D0BF",
+                    }}
+                  >
+                    product
+                  </th>
+                  <th
+                    style={{
+                      textTransform: "uppercase",
+                      color: "#085394",
+                      padding: "10px 20px",
+                      fontSize: "21px",
+                      textAlign: "start",
+                      borderTop: "2px solid #83D0BF",
+                      borderBottom: "2px solid #83D0BF",
+                    }}
+                  >
+                    description
+                  </th>
+                  <th
+                    style={{
+                      textTransform: "uppercase",
+                      color: "#085394",
+                      padding: "10px 20px",
+                      fontSize: "21px",
+                      textAlign: "left",
+                      borderTop: "2px solid #83D0BF",
+                      borderBottom: "2px solid #83D0BF",
+                    }}
+                  >
+                    unit price
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ textAlign: "start", padding: "11px 31px" }}>
+                    {location.state.Quantity}
+                  </td>
+                  <td style={{ textAlign: "start", padding: "17px 21px" }}>
+                    {location.state.Product}
+                  </td>
+                  <td style={{ textAlign: "start", padding: "17px 21px" }}>
+                    {location.state.Description}
+                  </td>
+                  <td style={{ textAlign: "left", paddingLeft: "57px" }}>
+                    {location.state.Price}
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ borderTop: "2px solid #83D0BF" }} />
+                  <td style={{ borderTop: "2px solid #83D0BF" }} />
+                  <td
+                    style={{
+                      textTransform: "uppercase",
+                      borderTop: "2px solid #83D0BF",
+                      color: "#085394",
+                      fontSize: "17px",
+                      textAlign: "start",
+                      padding: "10px 20px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Total
+                  </td>
+                  <td
+                    style={{
+                      textTransform: "uppercase",
+                      borderTop: "2px solid #83D0BF",
+                      color: "#085394",
+                      fontSize: "17px",
+                      padding: "10px 47px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    ₹{location.state.Total}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            {/*-bottm--*/}
+            <div className="head">
+              <h4
+                style={{
+                  color: "#085394",
+                  fontSize: "20px",
+                  margin: 0,
+                  fontWeight: 400,
+                }}
+              >
+                Terms &amp; Conditions
+              </h4>
+            </div>
+          </div>
+        </div>
+        ​
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       quantity:{location.state.Quantity.map((e)=><li>{e.quantity}</li>)}
+   Total:{location.state.Total.map((e)=>e.total)}
+
+
+
+
+   company registration*******************
+
+   import React,{useState} from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Container, Row, Col } from "reactstrap";
+import { postCompanyData } from "./../../Redux/Action/CompanyAction";
+import { Back, InputFirst, InputS } from "./CompanyRegStyle.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const [phone, setphone] = useState([])
+
+const ComapnyReg = ({ history }) => {
+  const notifyuser = () => toast.success("Success");
+  const state = useSelector((state) => state.state);
+  const dispatch = useDispatch();
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (companydata) => {
+   const body={ ...companydata,
+    contact: `+${phone}`
+  
+  
+  
+  }}
+
+
+    console.log(companydata,"company data************")
+    dispatch(postCompanyData(companydata));
+  }
+
+
+
+  const signin = () => {
+    history.push('/login')
+  }
+
+  
+  
+  return (
+    <>
+      <Container>
+        <Back>
+          <form onSubmit={handleSubmit(onSubmit)} className="form-data">
+            <h5 className="top-head1">
+              <div className="hover-effect">
+                <ul className="options">
+                  <li className="list-one"><b>Sign Up</b></li>
+                  <li className="list1" onClick={signin}><b>Sign In</b></li>
+                </ul>
+              </div>
+            </h5>
+            <Row>
+              <Col md="5">
+                <Row className="first">
+                  <Col md="12">
+                    <label for="Company name">company Name</label>
+
+                    <InputFirst
+                      placeholder="KeyMouseit"
+                      type="text"
+                      autoComplete="off"
+                      {...register("companyName", {
+                        required: true,
+
+                      })}
+                    />
+                    <p className="para">
+                      {errors.companyName && "Company Name is required*"}
+                    </p>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col md="12">
+                    <label for="Web Address">Web Address</label>
+
+                    <InputS
+                      placeholder="KeyMouseit"
+                      type="text"
+                      autoComplete="off"
+                      {...register("webAddress", {
+                        required: true,
+
+                      })}
+                    />
+                    <p className="para">
+                      {errors.webAddress && "Web Address is required*"}
+                    </p>
+                  </Col>
+                </Row>
+
+                <Row>
+                <Col md="6">
+                    <label for="number">Contact</label>
+                    <PhoneInput
+                      country={'in'}
+                      value={state.phone}
+                      onChange={phone => setphone(phone)}
+
+
+                    />
+                  </Col>
+
+                  <Col md="6">
+                    <label for="email">Email</label>
+
+                    <InputS
+                      placeholder="abc@example.com"
+                      type="text"
+                      autoComplete="off"
+                      {...register("email", {
+                        required: true,
+                      })}
+                    />
+                    <div className="para">
+                      <p>{errors.email && "Email is required"}</p>
+                    </div>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col md="6">
+                    <label for="Address">Address</label>
+
+                    <InputS
+                      placeholder="Address"
+                      type="text"
+                      autoComplete="off"
+                      {...register("address", {
+                        required: true,
+                      })}
+                    />
+                    <p className="para">
+                      {errors.address && "Please provide a valid Address*"}
+                    </p>
+                  </Col>
+
+                  <Col md="6">
+                    <label for="City">City</label>
+
+                    <InputS
+                      placeholder="city"
+                      type="text"
+                      autoComplete="off"
+                      {...register("city", {
+                        required: true,
+                      })}
+                    />
+                    <p className="para">
+                      {errors.city && "Provide a valid City"}
+                    </p>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col md="6">
+                    <label for="State">State</label>
+
+                    <InputS
+                      placeholder="State"
+                      type="text"
+                      autoComplete="off"
+                      {...register("state", {
+                        required: true,
+                      })}
+                    />
+                    <p className="para">
+                      {errors.city && "Please provide a state*"}
+                    </p>
+                  </Col>
+
+                  <Col md="6">
+                    <label for="status">Country</label>
+                    <select {...register("country")} className="select">
+                      <option value="India">India</option>
+                      <option value="Australia">Austrlia</option>
+                      <option value="USA">USA</option>
+                    </select>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col md="6">
+                    <label for="Password">Password</label>
+
+                    <InputS
+                      placeholder="password"
+                      type="password"
+                      autoComplete="off"
+                      {...register("password", {
+                        required: true,
+                      })}
+                    />
+                    <p className="para">
+                      {errors.password && "Password is required"}
+                    </p>
+                  </Col>
+
+                  <Col md="6">
+                    <label for="ConfirmPassword">Confirm password</label>
+
+                    <InputS
+                      placeholder="Confirm Password"
+                      type="password"
+                      autoComplete="off"
+                      {...register("confirmPassword", {
+                        required: true,
+                      })}
+                    />
+                    <p className="para">
+                      {errors.password && "Password is required"}
+                    </p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <InputS
+                      type="checkbox"
+                      autoComplete="off"
+                      className="checkbox-para"
+                      {...register("checkbox", {
+                        required: true,
+                      })}
+                    />
+                    <label for="checkbox" className="checkbox-para">
+                      I've Read agree with Terms of service and our privacy
+                      policy
+                    </label>
+                    <p className="para">
+                      {errors.checkbox && "You must agree before submitting."}
+                    </p>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <button className="btn-sub">
+                      <div className="outer-icon">
+                        <img
+                          className="arrow-image"
+                          src={
+                            require("./../../Images/next_arrow@3x.png")
+                              .default
+                          }
+                          alt="Header Img"
+                          srcset=""
+                        ></img>
+                      </div>
+                    </button>
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col md="7">
+                <img
+                  src={
+                    require("./../../Images/login_character.png")
+                      .default
+                  }
+                  alt="Header Img"
+                  srcset=""
+                ></img>
+              </Col>
+            </Row>
+          </form>
+        </Back>
+      </Container>
+      <ToastContainer />
+    </>
+  );
+};
+
+export default ComapnyReg;

@@ -41,7 +41,7 @@ export const postData = (data, history) => {
             history.push('/form', {
               userData: data
             })
-          }, 2000);
+          }, 1000);
         }
         console.log(response, "========response");
       })

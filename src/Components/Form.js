@@ -20,6 +20,7 @@ import Select from "react-select";
 import { productData } from "./../Redux/Action/ProductAction";
 import { getAllByText } from "@testing-library/dom";
 
+
 const Form = ({ history, location }) => {
   const [state1, setstate1] = useState({
     from: "",
@@ -76,10 +77,12 @@ const Form = ({ history, location }) => {
 
     console.log(addMore, "add more state")
 
-    
+
   };
 
   const deleteItem = (e, index) => {
+console.log(e,"e in deleted")
+    console.log(index,"deletre btn index")
     setIsEmpty(isEmpty - 1)
     console.log(index, "index issssssssssssssssssssssssssssss");
     const values = [...addMore.items];
@@ -89,6 +92,8 @@ const Form = ({ history, location }) => {
     setAddmore({
       items: values,
     });
+ console.log(pro,"state --------------->")
+ pro.splice(index,1);
   };
 
   const state = useSelector((state) => state);
@@ -106,44 +111,56 @@ const Form = ({ history, location }) => {
     dispatch(productData());
     console.log(location, "user reg data in form");
     console.log(selectedOrg, "sel org");
-    
+
     // console.log(selOrg,"local s data")
   }, []);
   // const onSubmit = (invoicedata) => dispatch(postInvoiceData
 
   //   (invoicedata));
- 
+
   const onSubmit = (invoicedata) => {
 
-    console.log(invoicedata,"invoice*************")
-    console.log(pro,"productsss*******************")
-    for(let i=0;i<pro.length;i++){
-      const data= [{...invoicedata,
-     
-        productName:pro[i].label,
-        quantity:pro[i].quantity,
-        unitPrice:pro[i].price,
-        total:total.total
-        }]
-
-        console.log(data,"final data----------------------")
-        dispatch(postInvoiceData(data, history))
-    }
-   
- 
-   
-
+    console.log(invoicedata, "invoice*************")
+    console.log(pro, "productsss*******************")
   
+    const emptyArr = []
 
-  //  setTimeout(() => {
-  //    history.push("/download")
-  //  }, 1000);
+    for (let i = 0; i < pro.length; i++) {
+        emptyArr.push({
+          productName: pro[i].label,
+          quantity: pro[i].quantity,
+          unitPrice: pro[i].price,
+          total: total.total
+        })
+
+    }
+
+    console.log(emptyArr,"array of obj")
+
+
+      const data = [{
+        ...invoicedata,
+        items: emptyArr
+
+       
+      }]
+console.log(pro,"productsssssssss")
+      console.log(data, "final data----------------------")
+      dispatch(postInvoiceData(data, history))
+    
+
+
+
+
+
+
    
- }
+  }
 
 
 
   const logoutFun = () => {
+    alert("are you sure you want to log out")
     localStorage.clear();
     history.push("/");
   };
@@ -156,8 +173,8 @@ const Form = ({ history, location }) => {
     tax: "",
     category: "",
   });
- 
- 
+
+
   //used new use selector for for product data
   const productsData = useSelector((state) => state.products.Product);
 
@@ -169,7 +186,7 @@ const Form = ({ history, location }) => {
     tax: e.tax,
   }));
 
-  
+
   // console.log(mappedProducts);
 
   const allInvoice = () => {
@@ -178,19 +195,22 @@ const Form = ({ history, location }) => {
 
   const [total, setTotal] = useState({
     total: "",
-  });
+  })
 
- useEffect(() => {
-  setTotal({...total, total : pro.reduce((sum, item) => {
-    const { tax, quantity, price } = item;
-    if (tax && quantity && price) {
-      const total = quantity * price;
-      const totalTax = 0.01 * tax * total;
-      return sum + total + totalTax
-    }
-    return sum;
-  }, 0) })
- }, [pro])
+
+  useEffect(() => {
+    setTotal({
+      ...total, total: pro.reduce((sum, item) => {
+        const { tax, quantity, price } = item;
+        if (tax && quantity && price) {
+          const total = quantity * price;
+          const totalTax = 0.01 * tax * total;
+          return sum + total + totalTax
+        }
+        return sum;
+      }, 0)
+    })
+  }, [pro])
 
 
 
@@ -224,13 +244,13 @@ const Form = ({ history, location }) => {
 
       <Container>
         <div className="outer">
-        
 
-          <form  onSubmit={e=>{
+
+          <form onSubmit={e => {
             e.preventDefault();
-            console.log({errors})
+            console.log({ errors })
             handleSubmit(onSubmit)(e)
-            }} className="form-data" >
+          }} className="form-data" >
             <Row>
               <div className="btn-head1">
                 <div>
@@ -242,11 +262,6 @@ const Form = ({ history, location }) => {
                   )} */}
                 </div>
 
-                <div className="log-btn">
-                  <button className="addnew-btn" onClick={logoutFun}>
-                    <i class="far fa-plus-square"> logout </i>
-                  </button>
-                </div>
               </div>
             </Row>
 
@@ -309,8 +324,9 @@ const Form = ({ history, location }) => {
                       return (
                         <DatePicker
                           selected={p.field.value}
-                          placeholderText="select date   "
+                          placeholderText="select date"
                           onChange={p.field.onChange}
+                      
                           className="date-picker"
                         />
                       );
@@ -344,9 +360,9 @@ const Form = ({ history, location }) => {
               <Row className="first">
                 {/* {JSON.stringify(pro,"tax vali state")} */}
                 <Col md="2">
-                  <label for="product name">Product Name</label>
+                  <label for="productName">Product Name</label>
 
-                 
+
                   <Controller
                     as={Select}
                     name="productName"
@@ -448,14 +464,14 @@ const Form = ({ history, location }) => {
 
 
                 </Col>
-                <Col md="2">
-                  <div style={{ display: 'flex',justifyContent:'space-evenly' }}>
+                <Col md="1">
+                  <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                     <button className="addnew" onClick={(e) => addItems(e)}>
                       <i class="far fa-plus-square">  </i>
 
 
                     </button>
-                    {isEmpty === 0 ? "" : <button className="subnew" onClick={deleteItem}  > <i class="far fa-minus-square" >  </i></button>}
+                    {isEmpty === 0 ? "" : <button className="subnew" onClick={() => deleteItem(e,index)}  > <i class="far fa-minus-square" >  </i></button>}
                   </div>
 
                 </Col>

@@ -6,6 +6,8 @@ import { getAllInvoices } from "./../Redux/Action/allInvoiceAction";
 import axios from "axios";
 import { reviewInvoice } from "./../Redux/Action/previewInvoiceAction";
 import ViewInvoice from "./ViewInvoice";
+import swal from 'sweetalert';
+
 
 const DownloadPage = ({ history }) => {
   const state = useSelector((state) => state);
@@ -23,6 +25,9 @@ const DownloadPage = ({ history }) => {
   };
 
   const viewFile = (e) => {
+    console.log(e,"view-files")
+  
+
       history.push("/view_invoice", {
       from: e.from,
       to: e.to,
@@ -34,10 +39,10 @@ const DownloadPage = ({ history }) => {
       state: e.from.state,
       updatedAt: e.from.updatedAt,
       webAddress: e.from.webAddress,
-      Description: e.items[0].description,
-      Price: e.items[0].unitPrice,
-      Quantity: e.items[0].quantity,
-      Product: e.items[0].productName,
+      Description: e.items,
+      Price: e.items,
+      Quantity: e.items,
+      Product: e.items,
       Total: e.items[0].total,
       Id: e._id,
       DueDate: e.dueDate,
@@ -51,6 +56,8 @@ const DownloadPage = ({ history }) => {
 
   const token = localStorage.getItem("user_token");
   const deleteInvoice = (e) => {
+    swal("item deleted successfully")
+   
     console.log("delded", e);
 
     axios
@@ -76,6 +83,27 @@ const DownloadPage = ({ history }) => {
 
   //   }
 
+  const mail=(e)=>{
+    swal("mail sended successfully")
+    console.log("mailed",e)
+
+    axios.get(`http://192.168.1.78:9000/invoice/mail/${e}`).
+    then((response)=>{
+      dispatch({
+        type:"INVOICE_MAIL",
+        payload:e,
+      })
+
+
+      
+      console.log(response)
+    
+    })
+
+
+    
+  }
+
   return (
     <div>
       <table className="container" id="customers">
@@ -97,29 +125,33 @@ const DownloadPage = ({ history }) => {
               <td>{e.items[0].productName} </td>
               <td>
                 <button
-                  className="styled-btn"
+                  className="styled-btn1"
                   onClick={(e) => previewInvoices(e)}
                   id={e._id}
                 >
                   Download Invoice
                 </button>
-                <button className="styled-btn" onClick={() => viewFile(e)}>
+                <button className="styled-btn2" onClick={() => viewFile(e)}>
                   View
                 </button>
                 <button
-                  className="styled-btn"
+                  className="styled-btn3"
                   onClick={() => updateInvoice(e._id)}
                 >
                   {" "}
                   Update{" "}
                 </button>
                 <button
-                  className="styled-btn"
+                  className="styled-btn4"
                   onClick={() => deleteInvoice(e._id)}
                 >
                   {" "}
                   Delete{" "}
                 </button>
+
+                <button 
+                className="styled-btn5"
+                onClick={()=>mail(e._id)}>Mail <i class="fas fa-envelope-open"></i></button>
               </td>
             </tr>
           ))}

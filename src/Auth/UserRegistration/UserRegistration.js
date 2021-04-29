@@ -40,6 +40,7 @@ const UserRegistration = ({ history }) => {
   } = useForm();
   console.log(org)
   const onSubmit = (data) => {
+    
 
     const body = {
       ...data,
@@ -260,10 +261,7 @@ const UserRegistration = ({ history }) => {
                     />
                     {errors.email && <p className="error">{errors.email.message}</p>}
 
-                    {/* <p className="para">
-                      {" "}
-                      {errors.email && "Email is required*"}
-                    </p> */}
+                    
                   </Col>
                 </Row>
 
@@ -304,37 +302,11 @@ const UserRegistration = ({ history }) => {
                   </Col>
                 </Row>
 
-                {/* <Row>
-                  <Col md="12">
-                    <label for="Cotact">Address</label>
-
-                    <InputS
-                      placeholder="KeyMouseit"
-                      autoComplete="off"
-                      type="text"
-                      {...register("address", {
-                        required: true,
-                        max: 3,
-                      })}
-                    />
-                    <p className="para">
-                      {errors.address && "Please provide a valid Address*"}
-                    </p>
-                  </Col>
-                </Row> */}
+               
 
                 <Row>
                   <Col md="12">
-                    {/* <label for="status">Organization</label>
-                                        <select {...register("organizations")} className="select">
-                
-                {state.companyId.to.map((e) => 
-                 <option value={e.id}>{e.name}</option>
-                 )}
-
-
                     
-               </select>  */}
 
 
                     <label for="Organizations">Organizations</label>
